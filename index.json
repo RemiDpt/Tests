@@ -1,0 +1,22 @@
+{
+  "title": "PKI niveau 0 — Ta première autorité de certification avec step-ca",
+  "description": "Créer une PKI complète, démarrer une CA et émettre ton premier certificat en moins de 30 minutes. Aucune installation locale.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh"
+    },
+    "steps": [
+      { "title": "Générer la PKI", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Démarrer la CA", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Émettre un certificat", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Inspecter et comprendre", "text": "step4/text.md" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}
