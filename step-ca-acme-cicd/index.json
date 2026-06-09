@@ -1,0 +1,22 @@
+{
+  "title": "step-ca niveau 1 — Certificat automatique dans une pipeline CI/CD (ACME)",
+  "description": "Activer ACME sur ta CA interne, puis obtenir et renouveler un certificat automatiquement depuis un job de pipeline — sans intervention humaine ni secret long-terme. Le modèle Let's Encrypt, appliqué à ton PKI.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "foreground": "setup.sh"
+    },
+    "steps": [
+      { "title": "Activer ACME sur la CA", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Démarrer la CA", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Le job de pipeline obtient son certificat", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Renouvellement automatique", "text": "step4/text.md" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}

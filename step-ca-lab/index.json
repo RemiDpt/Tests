@@ -4,7 +4,7 @@
   "details": {
     "intro": {
       "text": "intro.md",
-      "background": "setup.sh"
+      "foreground": "setup.sh"
     },
     "steps": [
       { "title": "Générer la PKI", "text": "step1/text.md", "verify": "step1/verify.sh" },
