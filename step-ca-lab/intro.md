@@ -12,8 +12,10 @@ plus lourdes (OpenXPKI, EJBCA).
 - un serveur de CA en ligne qui répond aux requêtes ;
 - un premier certificat émis et vérifié contre ta propre racine.
 
-> L'environnement s'installe en arrière-plan pendant la lecture de cette page.
-> Patiente quelques secondes après être passé à l'étape 1 si une commande `step`
-> n'est pas encore reconnue.
+> L'environnement (step CLI + step-ca) s'installe pendant cette intro. Patiente la
+> fin de l'installation avant de passer à l'étape 1.
+
+> step-ca n'a **pas d'interface graphique** : tout se passe dans le terminal.
+> C'est normal et voulu — c'est aussi ce qui rend la CA scriptable et automatisable.
 
 Durée estimée : 20 à 30 minutes.

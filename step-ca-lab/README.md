@@ -6,7 +6,7 @@ Premier lab d'un parcours de formation PKI pratique et gratuit.
 ```
 step-ca-lab/
 ├── index.json        # définition du scénario (intro / steps / finish / backend)
-├── setup.sh          # installe step + step-ca (lancé en arrière-plan à l'intro)
+├── setup.sh          # installe step + step-ca (FOREGROUND : install garantie avant l'étape 1)
 ├── intro.md
 ├── step1/  text.md + verify.sh   # générer la PKI
 ├── step2/  text.md + verify.sh   # démarrer la CA

@@ -11,13 +11,14 @@ Chaque scénario est un dossier au TOP LEVEL du repo, contenant un index.json. P
 - step1..stepN/ : chacun un text.md (avec blocs ```{{exec}}```) et un verify.sh (exit 0 = réussi)
 
 ## Conventions
-- Tout le contenu pédagogique en français, style impératif impersonnel.
+- Tout le contenu pédagogique en français ; tutoiement de l'apprenant, ton direct et engageant.
 - Mot de passe de lab trivial assumé (jamais en prod).
 - Référencer ANSSI plutôt que NIST quand pertinent.
 
 ## Garde-fous STRICTS
 - Ne JAMAIS toucher aux accès, tokens, clés, ou réglages git/GitHub.
 - Ne JAMAIS faire de git push. Tu peux préparer des commits, mais c'est MOI qui valide et pousse.
+- Ne JAMAIS ajouter de mention "Co-authored-by" ni "Generated with Claude Code" dans les commits.
 - Zéro contexte interne entreprise/client dans les fichiers (projet public).
 - Toujours me montrer ce que tu vas créer/modifier avant de le faire.
 

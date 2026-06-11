@@ -3,26 +3,25 @@
 `step ca init` crée en une commande la racine, l'intermédiaire et une *provisioner*
 (le mécanisme qui autorise l'émission de certificats).
 
-Lancer l'initialisation guidée :
+Lancer l'initialisation (version non-interactive, reproductible — c'est celle
+qu'on scripte en vrai) :
 
 ```
-step ca init
+step ca init --deployment-type standalone --name "Demo Lab Root CA" \
+  --dns localhost --address ":4443" --provisioner admin \
+  --password-file /root/.step-password
 ```{{exec}}
 
-Répondre :
-- **Deployment type** : `Standalone`
-- **Name** : `Demo Lab Root CA`
-- **DNS names / IPs** : `localhost`
-- **Address** : `:4443`
-- **Provisioner** : `admin`
-- **Password** : `LabPKI-non-securise`
+Ce que fait chaque option :
+- `--deployment-type standalone` : CA autonome, sans service cloud Smallstep ;
+- `--name` : le nom de ta CA, repris dans le sujet du certificat racine ;
+- `--dns localhost` / `--address ":4443"` : où la CA écoutera ;
+- `--provisioner admin` : crée la provisioner qui autorisera les émissions ;
+- `--password-file` : le mot de passe qui protège les clés privées générées
+  (ici le fichier de lab créé à l'installation — trivial, jamais en prod).
 
-> Alternative non-interactive (équivalente) :
-> ```
-> step ca init --deployment-type standalone --name "Demo Lab Root CA" \
->   --dns localhost --address ":4443" --provisioner admin \
->   --password-file /root/.step-password
-> ```{{exec}}
+> `step ca init` lancé sans options pose les mêmes questions une par une dans un
+> assistant interactif. Et pour repartir de zéro à tout moment : `rm -rf /root/.step`.
 
 Observer l'arborescence générée :
 

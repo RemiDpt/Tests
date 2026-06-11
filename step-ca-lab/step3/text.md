@@ -12,6 +12,11 @@ step ca certificate "test.lab.local" test.crt test.key \
   --root /root/.step/certs/root_ca.crt
 ```{{exec}}
 
+Ce que disent les options :
+- `--ca-url` : l'adresse de ta CA en ligne ;
+- `--root` : la racine utilisée pour vérifier la connexion TLS vers la CA ;
+- `--provisioner` / `--provisioner-password-file` : qui autorise l'émission, et avec quel secret.
+
 Deux fichiers apparaissent : `test.crt` (le certificat) et `test.key` (la clé
 privée associée). Le certificat est signé par l'intermédiaire, lui-même signé par
 la racine : c'est la chaîne de confiance que vérifiera tout client.

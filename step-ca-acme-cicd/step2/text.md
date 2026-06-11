@@ -6,9 +6,10 @@ Démarrer le serveur de CA en arrière-plan (il sert maintenant aussi l'API ACME
 step-ca $(step path)/config/ca.json --password-file /root/.step-password &
 ```{{exec}}
 
-Attendre 2-3 secondes, puis vérifier la santé :
+Vérifier la santé (le `sleep` laisse au serveur le temps de démarrer) :
 
 ```
+sleep 3
 curl -sk https://localhost:4443/health
 ```{{exec}}
 

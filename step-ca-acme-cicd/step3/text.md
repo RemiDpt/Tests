@@ -21,6 +21,11 @@ certbot certonly -n --standalone \
   --agree-tos -m ci@lab.local
 ```{{exec}}
 
+Les options qui rendent ça automatisable :
+- `-n` : non-interactif, aucune question posée — condition de survie en pipeline ;
+- `--standalone` : certbot ouvre lui-même un mini serveur web sur le port 80 pour répondre au challenge ;
+- `--agree-tos` / `-m` : accepte les conditions et déclare l'email de contact du compte ACME, sans prompt.
+
 Ce qui se passe, sans aucune intervention :
 1. `certbot` crée un compte ACME et commande un certificat pour `ci-runner.lab.local` ;
 2. la CA lui pose un **challenge HTTP-01** ; `certbot` (mode `--standalone`) ouvre un
