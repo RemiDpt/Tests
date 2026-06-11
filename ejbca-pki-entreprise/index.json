@@ -1,0 +1,22 @@
+{
+  "title": "EJBCA — La PKI d'entreprise et le cap post-quantique",
+  "description": "Déployer EJBCA Community, créer une CA racine, enrôler une entité finale, puis franchir le cap : une CA signée en ML-DSA, l'algorithme post-quantique standardisé par le NIST. L'aboutissement du parcours crypto-agilité.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "foreground": "setup.sh"
+    },
+    "steps": [
+      { "title": "Explorer la PKI d'entreprise", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Créer une CA racine", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Enrôler une entité finale", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Le cap post-quantique", "text": "step4/text.md" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}
