@@ -10,6 +10,9 @@ set -e
 # plugin v2 "docker compose" (avec espace), absent de cet environnement Killercoda.
 command -v docker >/dev/null || apt-get install -y -qq docker.io
 command -v docker-compose >/dev/null || apt-get install -y -qq docker-compose
+# socat : sert de pont HTTP->HTTPS à l'étape 1 (le proxy Killercoda ne parle qu'en
+# HTTP, or l'UI OpenXPKI n'est servie qu'en HTTPS). Voir openxpki-workflow-ra/step1.
+command -v socat >/dev/null || apt-get install -y -qq socat
 
 cd /root
 git clone --quiet https://github.com/openxpki/openxpki-docker.git

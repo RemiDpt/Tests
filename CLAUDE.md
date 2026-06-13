@@ -14,6 +14,7 @@ Chaque scénario est un dossier au TOP LEVEL du repo, contenant un index.json. P
 - Tout le contenu pédagogique en français ; tutoiement de l'apprenant, ton direct et engageant.
 - Mot de passe de lab trivial assumé (jamais en prod).
 - Référencer ANSSI plutôt que NIST quand pertinent.
+- Tout accès à une UI/service web depuis le navigateur doit utiliser `{{TRAFFIC_HOSTx_PORT}}`, jamais `localhost` (qui pointe vers la machine de l'apprenant, pas la VM). Le port doit être exposé vers l'hôte (mapping docker-compose). Le proxy Killercoda ne parle qu'en HTTP au backend : si le service n'est servi qu'en HTTPS, intercaler un pont HTTP→HTTPS (`socat TCP-LISTEN:PORT,fork,reuseaddr OPENSSL-CONNECT:127.0.0.1:PORT_TLS,verify=0`) et pointer le lien sur le port HTTP du pont. NB : `localhost`/`127.0.0.1` reste correct pour un CLI qui parle à un service local sur la VM (ex. `step --ca-url`, `bao` BAO_ADDR).
 
 ## Garde-fous STRICTS
 - Ne JAMAIS toucher aux accès, tokens, clés, ou réglages git/GitHub.

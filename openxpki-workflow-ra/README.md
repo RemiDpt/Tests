@@ -13,7 +13,7 @@ openxpki-workflow-ra/
 ├── index.json        # setup.sh en FOREGROUND (install longue : annoncée dans l'intro)
 ├── setup.sh          # docker-compose officiel openxpki-docker + config communautaire
 ├── intro.md
-├── step1/  text.md + verify.sh   # pile docker + ouverture de l'UI (TRAFFIC_HOST1_8443)
+├── step1/  text.md + verify.sh   # pile docker + pont socat HTTP->HTTPS + UI (TRAFFIC_HOST1_8888)
 ├── step2/  text.md + verify.sh   # CSR openssl + soumission dans l'UI (verify léger)
 ├── step3/  text.md + verify.sh   # approbation RA + rapatriement du PEM (verify léger)
 ├── step4/  text.md               # séparation des rôles, quatre yeux, CRR
@@ -37,8 +37,17 @@ openxpki-workflow-ra/
 - l'injection scriptée de `cli.yaml` (clé publique indentée) et du secret
   `##SVAULTKEY##` dans `crypto.yaml` (sed sur le placeholder de la branche
   community) ;
-- le lien `{{TRAFFIC_HOST1_8443}}/webui/index/` derrière le proxy Killercoda
-  (HTTPS auto-signé + éventuelles réécritures) ;
+- **accès à l'UI = LE point sensible.** L'UI OpenXPKI n'est servie qu'en **HTTPS**
+  (port conteneur 443 → hôte 8443 ; le port 80/8080 fait un 301 vers HTTPS, donc
+  inutilisable). Or le proxy Killercoda ne parle qu'en **HTTP** au backend
+  (cf. doc officielle « Services need to be accessible via HTTP and not HTTPS »).
+  Solution retenue : un **pont socat** sur le port `8888` (HTTP en entrée →
+  `OPENSSL-CONNECT` vers `127.0.0.1:8443`), lancé en tâche de fond à l'étape 1, et
+  le lien pointe vers `{{TRAFFIC_HOST1_8888}}/webui/index/`. À VALIDER EN LIVE :
+  que Killercoda route bien un port arbitraire (8888) et que le pont tient la
+  navigation de l'UI (XHR/JSON, cookies). Alternative si le pont échoue :
+  réécrire le vhost Apache pour servir `/webui/` en clair sur le port 80
+  (plus invasif, cookies « secure » à neutraliser) ;
 - les **libellés exacts des menus** de l'UI aux étapes 2 et 3 (« Request new
   certificate », choix du profil, paste PKCS#10, bouton d'approbation) — rédigés
   d'après la doc, à confronter à l'UI réelle ;
