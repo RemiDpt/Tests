@@ -1,0 +1,22 @@
+{
+  "title": "PKI niveau 2 — Cérémonie de clés avec un HSM (SoftHSM2/PKCS#11)",
+  "description": "Mettre en scène une cérémonie de clés : générer la clé privée d'une CA racine DANS un module matériel (simulé par SoftHSM2), prouver qu'elle n'en sort jamais, et signer le certificat racine sans jamais exposer la clé. Le cran de protection des clés de CA.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "foreground": "setup.sh"
+    },
+    "steps": [
+      { "title": "Préparer le HSM", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Générer la clé de CA dans le HSM", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "La clé ne sort pas — signer la racine", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Comprendre la cérémonie de clés", "text": "step4/text.md" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}
