@@ -1,0 +1,22 @@
+{
+  "title": "Défi OpenBao — Contraindre, scoper, révoquer, chaîner",
+  "description": "Quatre défis OpenBao à résoudre seul : rôle PKI contraint qui refuse, révocation + CRL, authentification AppRole pour un runner CI, et intermédiaire signée par une racine externe. Aucune commande fournie pour le cœur du défi. Indice et solution de référence repliables.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "foreground": "setup.sh"
+    },
+    "steps": [
+      { "title": "Défi 1 — Un rôle qui refuse hors de son périmètre", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Défi 2 — Révoquer et le prouver dans la CRL", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Défi 3 — AppRole : un token CI au pouvoir limité", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Défi 4 — Intermédiaire signée par une racine externe", "text": "step4/text.md", "verify": "step4/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "title": "Défi step-ca — Résous les contraintes d'une PKI sans filet",
+  "description": "Quatre défis step-ca à résoudre seul : chaîne multi-niveaux, certificats SSH, politique de provisioner qui refuse, et templates imposés. Aucune commande fournie — c'est à toi de trouver. Indice et solution de référence repliables en fin d'étape.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "foreground": "setup.sh"
+    },
+    "steps": [
+      { "title": "Défi 1 — Hiérarchie à trois niveaux (hors-ligne)", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Défi 2 — Émettre un certificat SSH utilisateur", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Défi 3 — Une politique qui refuse pour de vrai", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Défi 4 — Imposer un contenu par template", "text": "step4/text.md", "verify": "step4/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}
