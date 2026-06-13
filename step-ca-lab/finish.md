@@ -8,8 +8,7 @@ Récapitulatif de ce qui a été monté :
 C'est une PKI complète, en moins de 30 minutes et sans installation locale.
 
 **Suite du parcours :**
-1. **OpenBao** — certificats dynamiques à durée de vie courte, révocation au bail.
+1. **OpenBao** — certificats dynamiques à durée de vie courte.
 2. **OpenXPKI** — workflow d'autorité d'enregistrement (demande → validation → émission).
-3. **EJBCA** — la PKI d'entreprise complète : profils, protocoles d'enrôlement, PQC.
 
 Chaque brique réutilise la même mécanique de scénario que celle-ci.

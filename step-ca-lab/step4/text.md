@@ -1,5 +1,8 @@
 # Étape 4 — Inspecter et comprendre
 
+Un certificat n'est pas une boîte noire : c'est un document lisible, signé, qui
+raconte qui il identifie, qui l'a émis et jusqu'à quand il vaut. Ouvrons-le pour de bon.
+
 Lire le contenu réel du certificat émis :
 
 ```

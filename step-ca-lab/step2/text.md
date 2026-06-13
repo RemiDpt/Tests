@@ -1,7 +1,7 @@
 # Étape 2 — Démarrer la CA
 
-Une PKI générée ne sert à rien tant que la CA n'est pas *en ligne* pour répondre
-aux demandes. Démarrer le serveur en arrière-plan :
+Pour l'instant, ta PKI dort sur le disque : des fichiers, rien de plus. Une CA ne sert
+à rien tant qu'elle n'est pas *en ligne*, à l'écoute, prête à répondre. On la réveille :
 
 ```
 step-ca $(step path)/config/ca.json --password-file /root/.step-password &

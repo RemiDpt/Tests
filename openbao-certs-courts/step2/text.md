@@ -1,7 +1,9 @@
 # Étape 2 — Monter le moteur PKI et créer la CA
 
-Dans OpenBao, chaque fonctionnalité est un **moteur de secrets** monté sur un chemin.
-Monter le moteur PKI, puis lui fixer une durée de vie maximale :
+OpenBao ne fait pas que de la PKI : bases de données, clés SSH, secrets applicatifs…
+Chaque capacité est un **moteur** qu'on branche sur un chemin, comme un module sur un
+tableau de bord. On active celui qui nous intéresse, puis on lui fixe une durée de vie
+maximale :
 
 ```
 bao secrets enable pki

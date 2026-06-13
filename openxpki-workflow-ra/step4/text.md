@@ -22,7 +22,7 @@ l'inverse (automatisation maximale) :
   aussi un registre d'audit.
 
 **Ce que ça coûte** : du délai et des humains. D'où la règle pratique — workflow RA
-pour les identités fortes et les cas à enjeu, automatisation (ACME, secrets
+pour les identités fortes et les cas à enjeu, automatisation (token court, secrets
 dynamiques) pour les machines en volume. Les deux modèles coexistent dans une même
 organisation.
 
@@ -30,7 +30,3 @@ organisation.
 propose une action de demande de révocation (CRR — *Certificate Revocation
 Request*), qui suit le même chemin demande → approbation → publication de CRL.
 Si tu as le temps, lance-en une sur ton certificat et observe le parcours.
-
-Prochaine étape du parcours : **EJBCA**, où ces concepts (profils, rôles,
-enrôlement) passent à l'échelle d'une PKI d'entreprise complète — avec l'ouverture
-post-quantique en ligne de mire.

@@ -1,5 +1,8 @@
 # Étape 3 — Émettre un certificat
 
+Le moment de vérité. Tout ce qui précède — racine, intermédiaire, CA en ligne —
+n'avait qu'un but : pouvoir délivrer **ce** certificat.
+
 Demander un certificat feuille pour `test.lab.local`, signé par la provisioner
 `admin`. Les fichiers sont créés dans le répertoire courant (`/root`).
 

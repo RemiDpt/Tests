@@ -1,7 +1,7 @@
 # OpenXPKI : quand un humain valide la demande
 
 Dans les labs précédents, le demandeur obtenait son certificat **directement** : mot
-de passe (niveau 0), challenge ACME (niveau 1), token OpenBao. Mais dans beaucoup de
+de passe (niveau 0), token court (niveau 1), token OpenBao. Mais dans beaucoup de
 contextes — identités de personnes, certificats à fort enjeu, exigences
 réglementaires — une PKI d'entreprise impose une étape de plus : la **validation
 humaine** par une **autorité d'enregistrement (RA)**.

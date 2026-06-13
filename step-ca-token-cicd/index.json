@@ -1,0 +1,22 @@
+{
+  "title": "step-ca niveau 1 — Certificat automatique en CI/CD (token court)",
+  "description": "Émettre et renouveler un certificat automatiquement depuis un job de pipeline, sans intervention humaine ni secret long-terme. Le modèle de l'identité de charge de travail : un token éphémère, jamais un mot de passe stocké.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "foreground": "setup.sh"
+    },
+    "steps": [
+      { "title": "Créer la PKI", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Démarrer la CA", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Le job de pipeline obtient son certificat", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Automatiser sans secret long-terme", "text": "step4/text.md" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}

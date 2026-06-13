@@ -10,7 +10,7 @@ Ce que tu as construit :
 
 Trois modèles d'émission vus jusqu'ici :
 1. **niveau 0** : émission manuelle (step-ca) ;
-2. **niveau 1** : émission automatique par challenge (ACME) ;
+2. **niveau 1** : émission automatique par token court (identité de charge de travail) ;
 3. **ici** : secret dynamique à durée courte (OpenBao).
 
 **Pour aller plus loin :**
@@ -19,5 +19,4 @@ Trois modèles d'émission vus jusqu'ici :
 - comparer avec l'agent OpenBao/Vault qui renouvelle automatiquement les certificats.
 
 **Suite du parcours :**
-- **OpenXPKI** — le workflow d'autorité d'enregistrement : demande → validation humaine → émission ;
-- **EJBCA** — la PKI d'entreprise complète : profils, protocoles d'enrôlement, ouverture post-quantique.
+- **OpenXPKI** — le workflow d'autorité d'enregistrement : demande → validation humaine → émission.

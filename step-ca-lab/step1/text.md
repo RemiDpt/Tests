@@ -1,5 +1,8 @@
 # Étape 1 — Générer la PKI
 
+Avant d'émettre le moindre certificat, il faut une **autorité** : quelqu'un dont la
+signature fait foi. C'est la toute première brique, et tout le reste en dépend.
+
 `step ca init` crée en une commande la racine, l'intermédiaire et une *provisioner*
 (le mécanisme qui autorise l'émission de certificats).
 

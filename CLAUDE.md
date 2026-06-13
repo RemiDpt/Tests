@@ -4,7 +4,7 @@
 Parcours de labs Killercoda gratuits et communautaires pour apprendre les PKI en pratique, avec un fil rouge crypto-agilité / post-quantique. Public : ingénieurs cyber/DevOps francophones. Contenu 100% générique et open source.
 
 ## Structure du repo
-Chaque scénario est un dossier au TOP LEVEL du repo, contenant un index.json. Patron type (voir step-ca-lab/ et step-ca-acme-cicd/) :
+Chaque scénario est un dossier au TOP LEVEL du repo, contenant un index.json. Patron type (voir step-ca-lab/ et step-ca-token-cicd/) :
 - index.json (intro avec setup.sh en foreground, steps avec verify, finish, backend imageid ubuntu)
 - setup.sh : installe les outils via .deb/apt, crée /root/.step-password, touch /root/.setup-done
 - intro.md, finish.md
@@ -23,5 +23,6 @@ Chaque scénario est un dossier au TOP LEVEL du repo, contenant un index.json. P
 - Toujours me montrer ce que tu vas créer/modifier avant de le faire.
 
 ## Roadmap des labs
-Faits : step-ca niveau 0 (PKI de base), niveau 1 (ACME en CI/CD).
-À venir : OpenBao (certs courts), OpenXPKI (workflow RA avec UI), EJBCA (PKI entreprise + PQC).
+Faits : step-ca niveau 0 (PKI de base), niveau 1 (token court CI/CD), OpenBao (certs courts), OpenXPKI (workflow RA avec UI).
+Niveau 2 (hsm-key-ceremony) : cérémonie de clés avec SoftHSM2/PKCS#11 + OpenSSL — généré, À TESTER EN LIVE (engine PKCS#11 OpenSSL 1.1 vs 3 = point fragile). N'utilise PAS step-ca (binaire standard sans PKCS#11) : voie SoftHSM2 + OpenSSL retenue.
+EJBCA abandonné : son Admin UI à authentification par certificat client est incompatible avec le proxy Killercoda.

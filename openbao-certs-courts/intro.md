@@ -1,9 +1,11 @@
 # OpenBao : des certificats courts, dynamiques, à la demande
 
 Aux niveaux 0 et 1, la CA (step-ca) émettait des certificats sur demande — à la main,
-puis automatiquement via ACME. Ici, on change de modèle : avec **OpenBao** (fork open
+puis automatiquement via un token court. Ici, on change de modèle : avec **OpenBao** (fork open
 source de HashiCorp Vault, hébergé par la Linux Foundation), le certificat devient un
 **secret dynamique** — généré à la volée, valable quelques minutes, jeté, regénéré.
+Pense au badge visiteur qu'on réimprime à chaque passage plutôt qu'à une carte d'accès
+permanente : moins pratique à voler, rien à révoquer le soir venu.
 
 Pourquoi c'est important :
 - plus de stock de certificats à gérer : chaque service demande le sien au moment où il en a besoin ;
