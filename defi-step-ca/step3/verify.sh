@@ -2,10 +2,18 @@
 ROOT="$(step path)/certs/root_ca.crt"
 CAURL="https://localhost:4443"
 
-# 1) Le certificat conforme doit exister et viser lab.local.
-[ -f /root/good.crt ] || { echo "/root/good.crt manquant : émets d'abord un certificat conforme pour app.lab.local."; exit 1; }
-if ! openssl x509 -in /root/good.crt -noout -text | grep -qi "lab.local"; then
-  echo "/root/good.crt ne vise pas un nom *.lab.local."
+# 1) Le certificat conforme doit exister (cherché sans supposer le dossier).
+GOOD=""
+for d in "$PWD" /root /tmp "$HOME"; do
+  [ -f "$d/good.crt" ] && { GOOD="$d/good.crt"; break; }
+done
+if [ -z "$GOOD" ]; then
+  echo "good.crt introuvable (cherché dans le dossier courant, /root, /tmp)."
+  echo "Émets d'abord un certificat conforme pour app.lab.local dans good.crt."
+  exit 1
+fi
+if ! openssl x509 -in "$GOOD" -noout -text | grep -qi "lab.local"; then
+  echo "$GOOD ne vise pas un nom *.lab.local."
   exit 1
 fi
 

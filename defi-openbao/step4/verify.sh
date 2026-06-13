@@ -2,7 +2,16 @@
 export BAO_ADDR=http://127.0.0.1:8200
 export BAO_TOKEN=root
 
-[ -f /root/ext_root.crt ] || { echo "/root/ext_root.crt manquant (la racine externe)."; exit 1; }
+# Localise la racine externe sans supposer le dossier.
+EXT=""
+for d in "$PWD" /root /tmp "$HOME"; do
+  [ -f "$d/ext_root.crt" ] && { EXT="$d/ext_root.crt"; break; }
+done
+if [ -z "$EXT" ]; then
+  echo "ext_root.crt introuvable (cherché dans le dossier courant, /root, /tmp)."
+  echo "Crée la racine externe (OpenSSL) sous le nom ext_root.crt."
+  exit 1
+fi
 
 # 1) pki_int doit avoir une CA signée.
 if ! bao read -field=certificate pki_int/cert/ca > /tmp/int.crt 2>/dev/null; then
@@ -11,8 +20,8 @@ if ! bao read -field=certificate pki_int/cert/ca > /tmp/int.crt 2>/dev/null; the
 fi
 
 # 2) L'intermédiaire doit être signée par la racine externe.
-if ! openssl verify -CAfile /root/ext_root.crt /tmp/int.crt >/dev/null 2>&1; then
-  echo "L'intermédiaire de pki_int n'est pas signée par /root/ext_root.crt."
+if ! openssl verify -CAfile "$EXT" /tmp/int.crt >/dev/null 2>&1; then
+  echo "L'intermédiaire de pki_int n'est pas signée par $EXT."
   exit 1
 fi
 
@@ -22,7 +31,7 @@ if ! bao write -format=json pki_int/issue/leaf common_name=svc.lab.local ttl=10m
   exit 1
 fi
 jq -r .data.certificate /tmp/leaf.json > /tmp/leaf.crt
-if ! openssl verify -CAfile /root/ext_root.crt -untrusted /tmp/int.crt /tmp/leaf.crt >/dev/null 2>&1; then
+if ! openssl verify -CAfile "$EXT" -untrusted /tmp/int.crt /tmp/leaf.crt >/dev/null 2>&1; then
   echo "La chaîne feuille -> intermédiaire -> racine externe ne se vérifie pas."
   exit 1
 fi

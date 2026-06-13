@@ -4,7 +4,8 @@ Pas besoin du serveur CA ici : l'outil `step certificate` sait créer et signer 
 certificats directement, sur le disque. Idéal pour bien voir la mécanique d'une chaîne.
 
 ## 🎯 Objectif
-Construire une **chaîne à trois niveaux** dans `/root` :
+Construire une **chaîne à trois niveaux** (les trois certificats dans un **même
+dossier** ; le vérificateur les cherche dans ton dossier courant, `/root` ou `/tmp`) :
 
 | Fichier | Rôle | Contrainte |
 |---|---|---|

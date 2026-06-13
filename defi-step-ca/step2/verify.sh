@@ -1,23 +1,21 @@
 #!/bin/bash
-CERT=/root/id_deploy-cert.pub
-[ -f "$CERT" ] || { echo "Certificat SSH introuvable : $CERT"; exit 1; }
+# Cherche un certificat SSH UTILISATEUR portant le principal 'deploy', sans supposer
+# le chemin ni le nom de la clé : tout fichier *-cert.pub des dossiers candidats.
+FOUND=""
+for d in "$PWD" /root /tmp "$HOME"; do
+  for f in "$d"/*-cert.pub; do
+    [ -f "$f" ] || continue
+    INFO=$(ssh-keygen -L -f "$f" 2>/dev/null) || continue
+    if echo "$INFO" | grep -qi "Type:.*user certificate" && echo "$INFO" | grep -qi "deploy"; then
+      FOUND="$f"; break 2
+    fi
+  done
+done
 
-INFO=$(ssh-keygen -L -f "$CERT" 2>/dev/null)
-if [ -z "$INFO" ]; then
-  echo "$CERT n'est pas un certificat SSH lisible (ssh-keygen -L échoue)."
-  exit 1
-fi
-
-# Doit être un certificat UTILISATEUR (pas host).
-if ! echo "$INFO" | grep -qi "Type:.*user certificate"; then
-  echo "Ce certificat n'est pas de type 'user' (attendu : certificat SSH utilisateur)."
-  echo "$INFO" | grep -i "Type:"
-  exit 1
-fi
-
-# Doit porter le principal 'deploy'.
-if ! echo "$INFO" | grep -qi "deploy"; then
-  echo "Le principal 'deploy' n'apparaît pas dans le certificat."
+if [ -z "$FOUND" ]; then
+  echo "Aucun certificat SSH *utilisateur* portant le principal 'deploy' n'a été trouvé."
+  echo "Cherché : *-cert.pub dans le dossier courant, /root, /tmp."
+  echo "Émets-le (ex. dans /root/id_deploy-cert.pub) puis relance Check."
   exit 1
 fi
 
