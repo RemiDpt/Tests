@@ -5,7 +5,7 @@ Regarder ce qui tourne :
 
 ```
 cd /root/openxpki-docker
-docker compose ps
+docker-compose ps
 ```{{exec}}
 
 Cinq services, chacun son rôle :

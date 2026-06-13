@@ -6,7 +6,10 @@ set -e
 
 # Docker est normalement préinstallé sur l'image Killercoda ubuntu.
 # ⚠️ Garde-fou à valider en live : si absent, on tente l'installation apt.
-command -v docker >/dev/null || apt-get install -y -qq docker.io docker-compose-v2
+# NB : on installe le binaire historique "docker-compose" (avec tiret), pas le
+# plugin v2 "docker compose" (avec espace), absent de cet environnement Killercoda.
+command -v docker >/dev/null || apt-get install -y -qq docker.io
+command -v docker-compose >/dev/null || apt-get install -y -qq docker-compose
 
 cd /root
 git clone --quiet https://github.com/openxpki/openxpki-docker.git
@@ -34,10 +37,10 @@ sed -i "s|you must put your own 64 characters key here ##SVAULTKEY##|$SVAULT|" \
   openxpki-config/config.d/system/crypto.yaml
 
 # 3) Démarrage de la pile (db -> server -> client -> web, healthchecks en cascade).
-docker compose up -d web
+docker-compose up -d web
 
 # 4) Config d'exemple : CA racine + émettrice de démo, comptes de test
 #    (bob/alice côté utilisateurs, raop/rob/rose côté opérateurs, mdp "openxpki").
-docker compose exec -u pkiadm server /bin/bash /etc/openxpki/contrib/sampleconfig.sh
+docker-compose exec -u pkiadm server /bin/bash /etc/openxpki/contrib/sampleconfig.sh
 
 touch /root/.setup-done

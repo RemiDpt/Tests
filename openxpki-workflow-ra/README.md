@@ -11,7 +11,7 @@ dans l'interface web, la CA émet. L'apprenant joue les deux rôles (`bob` puis
 ```
 openxpki-workflow-ra/
 ├── index.json        # setup.sh en FOREGROUND (install longue : annoncée dans l'intro)
-├── setup.sh          # docker compose officiel openxpki-docker + config communautaire
+├── setup.sh          # docker-compose officiel openxpki-docker + config communautaire
 ├── intro.md
 ├── step1/  text.md + verify.sh   # pile docker + ouverture de l'UI (TRAFFIC_HOST1_8443)
 ├── step2/  text.md + verify.sh   # CSR openssl + soumission dans l'UI (verify léger)
@@ -28,8 +28,9 @@ openxpki-workflow-ra/
   à manipuler le certificat.
 
 ## Points fragiles à tester en live (nombreux sur ce lab)
-- **Docker + docker compose présents** sur l'image ubuntu de Killercoda (garde-fou
-  apt dans setup.sh, à valider) ;
+- **Docker + docker-compose (binaire à tiret, pas le plugin v2) présents** sur
+  l'image ubuntu de Killercoda — confirmé en live : c'est `docker-compose` qui
+  fonctionne, garde-fou apt dans setup.sh ;
 - **durée du setup en foreground** : pull des images + healthchecks en cascade +
   sampleconfig.sh — si trop long pour Killercoda, envisager un découpage ;
 - ressources de la VM (MariaDB + serveur Perl + Apache) ;

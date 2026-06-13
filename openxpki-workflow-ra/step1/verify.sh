@@ -5,6 +5,6 @@ if [ "$CODE" = "200" ]; then
   exit 0
 fi
 echo "L'interface ne répond pas (code HTTP : ${CODE:-aucun})."
-echo "Regarde l'état des services : cd /root/openxpki-docker && docker compose ps"
+echo "Regarde l'état des services : cd /root/openxpki-docker && docker-compose ps"
 echo "Si un service n'est pas 'healthy', attends une minute puis re-clique sur Check."
 exit 1
