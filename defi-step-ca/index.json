@@ -1,5 +1,5 @@
 {
-  "title": "Défi step-ca — Résous les contraintes d'une PKI sans filet",
+  "title": "[EN CHANTIER] Défi step-ca — Résous les contraintes d'une PKI sans filet",
   "description": "Quatre défis step-ca à résoudre seul : chaîne multi-niveaux, certificats SSH, politique de provisioner qui refuse, et templates imposés. Aucune commande fournie — c'est à toi de trouver. Indice et solution de référence repliables en fin d'étape.",
   "details": {
     "intro": {

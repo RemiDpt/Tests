@@ -28,10 +28,14 @@ Clique sur **Check** une fois le certificat émis.
 <summary>🆘 Indice</summary>
 
 La sous-commande dédiée est `step ssh certificate <principal> <fichier_clé>`. Elle
-**génère la paire de clés** et écrit le certificat à côté, suffixé `-cert.pub`. Pense
-à viser la bonne provisioner (`--provisioner admin --password-file …`), à donner
-l'URL et la racine de la CA, à borner la durée (`--not-after`), et à ne pas chiffrer
-la clé privée pour un lab (`--no-password --insecure`).
+**génère la paire de clés** et écrit le certificat à côté, suffixé `-cert.pub`. Deux
+mots de passe à ne pas confondre : `--provisioner-password-file` authentifie la
+**provisioner** (obligatoire pour ne pas être bloqué en interactif), tandis que
+`--password-file` sert à chiffrer la **clé privée générée**. Donne aussi l'URL et la
+racine de la CA, et borne la durée avec `--not-after`.
+
+> Piège : `--no-password` et `--password-file` portent tous deux sur la clé privée et
+> sont **incompatibles** (`step` renvoie une erreur). N'en mets qu'un.
 </details>
 
 <details>
@@ -39,8 +43,10 @@ la clé privée pour un lab (`--no-password --insecure`).
 
 ```
 step ssh certificate deploy /root/id_deploy \
-  --provisioner admin --password-file /root/.step-password \
-  --not-after 1h --no-password --insecure \
+  --provisioner admin \
+  --provisioner-password-file /root/.step-password \
+  --password-file /root/.step-password \
+  --not-after 1h \
   --ca-url https://localhost:4443 --root "$(step path)/certs/root_ca.crt"
 
 ssh-keygen -L -f /root/id_deploy-cert.pub
@@ -48,4 +54,6 @@ ssh-keygen -L -f /root/id_deploy-cert.pub
 
 `deploy` est à la fois le sujet et le principal du certificat. Le fichier
 `/root/id_deploy-cert.pub` est créé automatiquement à partir de `/root/id_deploy`.
+Ici `--provisioner-password-file` authentifie la provisioner `admin`, et
+`--password-file` chiffre la clé privée (sans intérêt en lab, mais évite tout prompt).
 </details>

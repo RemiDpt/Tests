@@ -1,5 +1,10 @@
 # Défi step-ca — à toi de jouer
 
+> 🚧 **Lab EN CHANTIER — non publié.** Le **Défi 3 (politique de provisioner)** a été
+> corrigé (politique au niveau `authority`, la seule appliquée en self-hosted) mais le
+> refus effectif n'a pas encore été reproduit en live. Ne pas publier tant que ce n'est
+> pas validé. Les défis 1, 2 et 4 sont indépendants de ce point.
+
 Tu as déjà fait les labs « découverte » ? Ici, **on retire les commandes**. Chaque
 étape pose un **objectif** et un **critère de réussite** vérifié par un script — mais
 ne te donne pas la solution. À toi de mobiliser ce que tu sais (et `step --help`,
