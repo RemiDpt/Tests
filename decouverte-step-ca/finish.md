@@ -8,7 +8,8 @@ Récapitulatif de ce qui a été monté :
 C'est une PKI complète, en moins de 30 minutes et sans installation locale.
 
 **Suite du parcours :**
-1. **OpenBao** — certificats dynamiques à durée de vie courte.
-2. **OpenXPKI** — workflow d'autorité d'enregistrement (demande → validation → émission).
+1. **niveau 1 (token court)** — automatiser l'émission sans secret durable.
+2. **OpenBao** — certificats dynamiques à durée de vie courte.
+3. **niveau 2 (HSM)** — protéger la clé de la CA dans un module matériel.
 
 Chaque brique réutilise la même mécanique de scénario que celle-ci.

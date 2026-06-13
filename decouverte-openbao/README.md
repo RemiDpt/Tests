@@ -1,6 +1,6 @@
 # Scénario Killercoda — OpenBao (certificats courts/dynamiques)
 
-Troisième lab du parcours PKI. Prérequis pédagogique : niveau 0 (step-ca-lab).
+Troisième lab du parcours PKI. Prérequis pédagogique : niveau 0 (decouverte-step-ca).
 
 ## Idée
 Le certificat devient un **secret dynamique** : généré à la demande par le moteur
@@ -9,7 +9,7 @@ que révocation). Angle crypto-agilité du parcours.
 
 ## Structure
 ```
-openbao-certs-courts/
+decouverte-openbao/
 ├── index.json        # setup.sh en FOREGROUND (install garantie avant l'étape 1)
 ├── setup.sh          # OpenBao (.deb GitHub releases, version épinglée) + jq
 ├── intro.md

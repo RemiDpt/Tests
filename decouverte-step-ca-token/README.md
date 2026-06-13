@@ -1,6 +1,6 @@
 # Scénario Killercoda — step-ca niveau 1 (token court en CI/CD)
 
-Deuxième lab du parcours PKI. Prérequis pédagogique : niveau 0 (step-ca-lab).
+Deuxième lab du parcours PKI. Prérequis pédagogique : niveau 0 (decouverte-step-ca).
 
 ## Idée
 Un job de pipeline obtient (et renouvelle) son certificat automatiquement grâce à un
@@ -14,7 +14,7 @@ charge de travail, sans secret long-terme stocké dans le runner.
 
 ## Structure
 ```
-step-ca-token-cicd/
+decouverte-step-ca-token/
 ├── index.json        # setup.sh en FOREGROUND (install garantie avant l'étape 1)
 ├── setup.sh          # step + step-ca (plus de certbot, plus de /etc/hosts)
 ├── intro.md
@@ -26,7 +26,7 @@ step-ca-token-cicd/
 ```
 
 ## Déploiement
-Mettre ce dossier au top level du repo Killercoda (à côté de step-ca-lab/),
+Mettre ce dossier au top level du repo Killercoda (à côté de decouverte-step-ca/),
 committer, pousser. Le webhook synchronise.
 
 ## Mécanique centrale (validée en live)

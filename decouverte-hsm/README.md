@@ -16,7 +16,7 @@ HSM) est identique.
 
 ## Structure
 ```
-hsm-key-ceremony/
+decouverte-hsm/
 ├── index.json        # setup.sh en FOREGROUND
 ├── setup.sh          # apt : softhsm2, opensc, libengine-pkcs11-openssl
 ├── intro.md

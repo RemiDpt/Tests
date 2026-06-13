@@ -16,10 +16,9 @@ mais **comment protéger ce qui rend l'émission digne de confiance**.
 | niveau 0 (step-ca) | comment émettre un certificat ? |
 | niveau 1 (token court) | comment automatiser sans secret durable ? |
 | OpenBao | comment rendre les certificats courts et dynamiques ? |
-| OpenXPKI | comment encadrer l'émission par une validation humaine ? |
 | niveau 2 (HSM) | comment protéger la clé qui fait foi ? |
 
 **Pour aller plus loin :**
 - rejouer la cérémonie avec une clé **ECDSA** plutôt que RSA ;
 - signer une **intermédiaire** par la racine du HSM, puis des certificats feuilles par l'intermédiaire ;
-- brancher la clé du HSM sur une vraie CA (step-ca compilé avec PKCS#11, ou EJBCA/OpenXPKI adossés à un HSM).
+- brancher la clé du HSM sur une vraie CA (step-ca compilé avec PKCS#11, ou une CA d'entreprise adossée à un HSM).

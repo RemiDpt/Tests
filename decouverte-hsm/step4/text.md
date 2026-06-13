@@ -27,8 +27,8 @@ n'a jamais existé.
 
 **Et le lien avec le reste du parcours ?** Tu as vu successivement *comment* émettre
 (niveau 0), *automatiser sans secret* (niveau 1), *raccourcir et rendre dynamique*
-(OpenBao), *encadrer par un humain* (OpenXPKI). Ici, tu t'es occupé du socle :
-**protéger la clé qui fait foi**. Une PKI agile, courte, automatisée, validée — mais
+(OpenBao). Ici, tu t'es occupé du socle :
+**protéger la clé qui fait foi**. Une PKI agile, courte, automatisée — mais
 dont la racine est inviolable. C'est le cran qui manquait.
 
 > Pour aller vers le réel : un vrai HSM (réseau ou carte), ou step-ca compilé avec le

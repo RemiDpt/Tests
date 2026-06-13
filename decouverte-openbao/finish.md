@@ -19,4 +19,4 @@ Trois modèles d'émission vus jusqu'ici :
 - comparer avec l'agent OpenBao/Vault qui renouvelle automatiquement les certificats.
 
 **Suite du parcours :**
-- **OpenXPKI** — le workflow d'autorité d'enregistrement : demande → validation humaine → émission.
+- **niveau 2 (HSM)** — la cérémonie de clés : générer et protéger la clé de la CA dans un module matériel.

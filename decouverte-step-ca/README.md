@@ -4,7 +4,7 @@ Premier lab d'un parcours de formation PKI pratique et gratuit.
 
 ## Structure
 ```
-step-ca-lab/
+decouverte-step-ca/
 ├── index.json        # définition du scénario (intro / steps / finish / backend)
 ├── setup.sh          # installe step + step-ca (FOREGROUND : install garantie avant l'étape 1)
 ├── intro.md

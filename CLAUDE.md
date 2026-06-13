@@ -4,11 +4,16 @@
 Parcours de labs Killercoda gratuits et communautaires pour apprendre les PKI en pratique, avec un fil rouge crypto-agilité / post-quantique. Public : ingénieurs cyber/DevOps francophones. Contenu 100% générique et open source.
 
 ## Structure du repo
-Chaque scénario est un dossier au TOP LEVEL du repo, contenant un index.json. Patron type (voir step-ca-lab/ et step-ca-token-cicd/) :
+Chaque scénario est un dossier au TOP LEVEL du repo, contenant un index.json. Patron type (voir decouverte-step-ca/ et decouverte-step-ca-token/) :
 - index.json (intro avec setup.sh en foreground, steps avec verify, finish, backend imageid ubuntu)
 - setup.sh : installe les outils via .deb/apt, crée /root/.step-password, touch /root/.setup-done
 - intro.md, finish.md
 - step1..stepN/ : chacun un text.md (avec blocs ```{{exec}}```) et un verify.sh (exit 0 = réussi)
+
+## Deux familles de labs
+- **Labs "découverte"** (préfixe `decouverte-`) : guidés, pédagogiques, commandes fournies dans des blocs `{{exec}}`. C'est la voie d'apprentissage de référence — NE PAS les modifier sur le fond.
+- **Labs "défi"** (préfixe `defi-`) : mêmes outils, mais l'apprenant doit RÉSOUDRE par lui-même. Au moins une étape non guidée (objectif posé, pas de solution donnée). Le verify.sh doit contrôler le RÉSULTAT réel (certificat conforme créé, demande non conforme rejetée…), pas qu'une commande a été tapée. Chaque étape de défi fournit un indice repliable + une solution de référence en fin d'étape.
+- Migration des dossiers existants vers le préfixe `decouverte-` : à faire avec précaution (renommer un dossier change l'URL Killercoda et casse les liens déjà partagés) — à valider avant d'appliquer.
 
 ## Conventions
 - Tout le contenu pédagogique en français ; tutoiement de l'apprenant, ton direct et engageant.
@@ -24,6 +29,9 @@ Chaque scénario est un dossier au TOP LEVEL du repo, contenant un index.json. P
 - Toujours me montrer ce que tu vas créer/modifier avant de le faire.
 
 ## Roadmap des labs
-Faits : step-ca niveau 0 (PKI de base), niveau 1 (token court CI/CD), OpenBao (certs courts), OpenXPKI (workflow RA avec UI).
-Niveau 2 (hsm-key-ceremony) : cérémonie de clés avec SoftHSM2/PKCS#11 + OpenSSL — généré, À TESTER EN LIVE (engine PKCS#11 OpenSSL 1.1 vs 3 = point fragile). N'utilise PAS step-ca (binaire standard sans PKCS#11) : voie SoftHSM2 + OpenSSL retenue.
+Faits (famille découverte) : step-ca niveau 0 (PKI de base), niveau 1 (token court CI/CD), OpenBao (certs courts).
+Niveau 2 (decouverte-hsm) : cérémonie de clés avec SoftHSM2/PKCS#11 + OpenSSL — généré, À TESTER EN LIVE (engine PKCS#11 OpenSSL 1.1 vs 3 = point fragile). N'utilise PAS step-ca (binaire standard sans PKCS#11) : voie SoftHSM2 + OpenSSL retenue.
+Faits (famille défi) : defi-step-ca (hiérarchie hors-ligne, certificat SSH, politique de provisioner qui refuse, template imposé) et defi-openbao (rôle contraint, révocation+CRL, AppRole, intermédiaire signée par racine externe). Générés, À TESTER EN LIVE (cf. points fragiles ci-dessous).
+Points fragiles défi À TESTER : step ca init --ssh + émission `step ssh certificate` ; schéma `policy.x509.allow.dns` et `options.x509.templateFile` dans ca.json + restart CA ; côté OpenBao : `pki_int/intermediate/set-signed`, `openssl x509 -req` avec process-substitution, persistance du serveur dev/env entre étapes.
+OpenXPKI abandonné : serveur "unhealthy" sur Killercoda et UI HTTPS inexploitable derrière le proxy (même classe de blocage que l'accès UI Killercoda).
 EJBCA abandonné : son Admin UI à authentification par certificat client est incompatible avec le proxy Killercoda.

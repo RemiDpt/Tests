@@ -10,7 +10,7 @@ serveur de CA en ligne, émission d'un certificat — **sans rien installer en l
 
 L'outil utilisé est **step-ca** (Smallstep) : une CA open source, écrite en Go,
 qui démarre instantanément. C'est le point d'entrée idéal avant d'attaquer des PKI
-plus lourdes comme OpenXPKI.
+plus lourdes ou des gestionnaires de secrets comme OpenBao.
 
 À la fin de ce lab :
 - une hiérarchie à deux niveaux (root + intermediate) générée par tes soins ;
