@@ -22,7 +22,9 @@ Au programme :
 2. démarrer la CA ;
 3. **simuler un job de pipeline** : un orchestrateur de confiance émet un token court,
    le job s'en sert — et lui seul — pour obtenir son certificat ;
-4. en faire un réflexe **automatisable**, sans jamais stocker de secret long-terme.
+4. brancher **ACME** pour qu'un service durable obtienne et **renouvelle** son certificat
+   tout seul, sans token ni mot de passe ;
+5. en faire un réflexe **automatisable**, sans jamais stocker de secret long-terme.
 
 > L'environnement (step CLI + step-ca) s'installe pendant cette intro. Patiente la
 > fin de l'installation avant de passer à l'étape 1.

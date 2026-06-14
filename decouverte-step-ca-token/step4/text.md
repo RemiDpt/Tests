@@ -1,44 +1,69 @@
-# Étape 4 — Automatiser sans secret long-terme
+# Étape 4 — ACME : le renouvellement qui se déclenche tout seul
 
-Un certificat step-ca dure **24 h par défaut** : court, volontairement. La vraie
-question en CI/CD n'est donc pas « comment l'obtenir » mais « comment le **renouveler
-sans personne**, et sans laisser traîner de secret ».
+> ⚠️ **ÉTAPE À TESTER EN LIVE — non validée sur Killercoda.** L'enchaînement provisioner
+> ACME + `acme.sh` en HTTP-01 standalone est à reproduire en conditions réelles avant
+> publication.
 
-Avec le modèle token, la réponse est limpide : **chaque exécution de pipeline
-recommence le geste de l'étape 3**. Un nouveau token court, un nouveau certificat. Pas
-de stock, pas de secret durable côté job. Rejoue le cycle pour t'en convaincre :
+Le modèle token de l'étape 3 est parfait pour un **job** qui démarre, réclame son
+certificat, puis meurt. Mais un **serveur qui tourne en continu** — une API, un nginx —
+ne « rejoue » aucun pipeline : il a juste besoin que son certificat se renouvelle tout
+seul, sans que personne n'y pense.
+
+C'est exactement ce que fait **ACME**, le protocole derrière Let's Encrypt — et step-ca
+le parle nativement. Un client ACME demande le certificat **et le renouvelle
+automatiquement**, sans token ni mot de passe : la CA vérifie elle-même que tu contrôles
+bien le nom demandé.
+
+D'abord, activer une **provisioner ACME** sur la CA, puis la redémarrer pour charger la
+nouvelle config :
 
 ```
-cd /root
-TOKEN=$(step ca token ci-runner.lab.local \
-  --provisioner admin --password-file /root/.step-password \
-  --ca-url https://localhost:4443 --root $(step path)/certs/root_ca.crt)
-step ca certificate ci-runner.lab.local cert.pem key.pem --token $TOKEN \
-  --ca-url https://localhost:4443 --root $(step path)/certs/root_ca.crt --force
-step certificate inspect cert.pem --short
+step ca provisioner add acme --type ACME
+pkill -f "step-ca .*ca.json"; sleep 1
+step-ca $(step path)/config/ca.json --password-file /root/.step-password &
+sleep 3 && curl -sk https://localhost:4443/health
 ```{{exec}}
 
-Un certificat tout frais, sans toucher à rien d'autre.
+Faire pointer un nom de test vers la VM, et installer le client **acme.sh** (et `socat`,
+dont il se sert pour répondre au défi) :
 
-**Et en production, où va le mot de passe de la provisioner ?** Justement, nulle part
-dans le job. Deux modèles dominent :
-- la plateforme CI (GitLab, GitHub Actions…) prouve l'identité du job par **OIDC** ;
-  step-ca a une provisioner OIDC qui frappe le token à la volée — aucun mot de passe,
-  même côté orchestrateur ;
-- une charge déjà détentrice d'un certificat le **renouvelle elle-même** par mTLS avec
-  `step ca renew` : c'est son certificat actuel qui l'authentifie, toujours sans secret.
+```
+grep -q acme.lab.local /etc/hosts || echo "127.0.0.1 acme.lab.local" >> /etc/hosts
+apt-get install -y -qq socat >/dev/null
+curl -s https://get.acme.sh | sh -s email=admin@lab.local >/dev/null
+echo "acme.sh installé."
+```{{exec}}
 
-> Le fil conducteur : le secret durable disparaît, remplacé par une **identité
-> prouvée à chaque fois**. C'est le principe de l'identité de charge de travail.
+Demander le certificat en mode **standalone** (acme.sh ouvre lui-même le port 80 le temps
+du défi). On indique la racine de la CA pour qu'acme.sh fasse confiance à son endpoint
+HTTPS :
 
----
+```
+export CURL_CA_BUNDLE=$(step path)/certs/root_ca.crt
+~/.acme.sh/acme.sh --issue --standalone -d acme.lab.local \
+  --server https://localhost:4443/acme/acme/directory
+```{{exec}}
 
-**Pourquoi certificats courts + renouvellement continu, c'est la bonne base.** Plus la
-durée de vie est courte, moins la révocation compte — un certificat compromis expire
-vite de lui-même. Et surtout, un parc qui se renouvelle déjà tout seul peut **changer
-d'algorithme** à la même cadence. C'est exactement le levier de la **crypto-agilité** :
-le jour où tu migres vers des algorithmes post-quantiques, un parc qui renouvelle
-toutes les quelques heures bascule en quelques jours — pas en quelques années. Une
-exigence que l'ANSSI met en avant dans ses travaux sur la transition post-quantique.
+Ce qui vient de se passer : acme.sh a ouvert le port 80, la CA l'a **recontacté** sur
+`http://acme.lab.local/.well-known/acme-challenge/...` pour vérifier qu'il contrôlait
+bien ce nom (le **défi HTTP-01**), puis elle a signé. Aucun token, aucun secret n'a
+circulé.
 
-Tu viens de monter la brique qui rend cette agilité possible.
+Et le renouvellement « tout seul » ? À l'installation, acme.sh a posé une tâche **cron**
+qui vérifie chaque jour l'échéance et renouvelle quand il le faut. Regarde-la, puis force
+un renouvellement pour voir le cycle complet :
+
+```
+crontab -l | grep acme.sh
+~/.acme.sh/acme.sh --renew -d acme.lab.local --force \
+  --server https://localhost:4443/acme/acme/directory
+```{{exec}}
+
+> La différence avec l'étape 3, en une phrase : le **token** convient à un job éphémère
+> qui demande son certificat puis disparaît ; **ACME** convient à un service durable, qui
+> doit pouvoir être recontacté par la CA mais n'a alors plus jamais à s'occuper de son
+> renouvellement. En production, un reverse-proxy comme Caddy ou Traefik fait tout ça
+> sans même un script — branché sur l'endpoint ACME de ta CA, il obtient et renouvelle
+> seul.
+
+Cliquer sur **Check** une fois le certificat ACME obtenu.

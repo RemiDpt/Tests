@@ -10,7 +10,8 @@
       { "title": "Créer la PKI", "text": "step1/text.md", "verify": "step1/verify.sh" },
       { "title": "Démarrer la CA", "text": "step2/text.md", "verify": "step2/verify.sh" },
       { "title": "Le job de pipeline obtient son certificat", "text": "step3/text.md", "verify": "step3/verify.sh" },
-      { "title": "Automatiser sans secret long-terme", "text": "step4/text.md" }
+      { "title": "ACME : le renouvellement qui se déclenche tout seul", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "Automatiser sans secret long-terme", "text": "step5/text.md" }
     ],
     "finish": {
       "text": "finish.md"
