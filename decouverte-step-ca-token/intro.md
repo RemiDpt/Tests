@@ -1,5 +1,7 @@
 # Niveau 1 : un certificat automatique en CI/CD
 
+> 🟢 **PARCOURS DÉCOUVERTE** — lab guidé, les commandes te sont fournies.
+
 Au niveau 0, tu as émis un certificat **à la main**, en tapant un mot de passe. Très
 bien pour apprendre — intenable au quotidien. Une pipeline CI/CD déploie dix fois par
 jour : personne ne va taper un mot de passe à chaque fois, et surtout, **on ne veut

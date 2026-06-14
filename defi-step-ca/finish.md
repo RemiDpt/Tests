@@ -1,5 +1,7 @@
 # Défi step-ca — relevé
 
+> 🔴 **PARCOURS DÉFI**
+
 Tu as résolu, sans commandes toutes faites :
 
 1. une **hiérarchie à trois niveaux** vérifiable de la feuille à la racine ;

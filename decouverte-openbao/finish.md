@@ -1,5 +1,7 @@
 # Terminé
 
+> 🟢 **PARCOURS DÉCOUVERTE**
+
 Ce que tu as construit :
 - un serveur **OpenBao** en mode dev, avec le moteur **PKI** monté ;
 - une CA interne dont la clé privée ne sort jamais d'OpenBao ;

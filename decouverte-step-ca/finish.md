@@ -1,5 +1,7 @@
 # Terminé
 
+> 🟢 **PARCOURS DÉCOUVERTE**
+
 Récapitulatif de ce qui a été monté :
 - une hiérarchie racine + intermédiaire ;
 - une CA en ligne répondant sur `:4443` ;

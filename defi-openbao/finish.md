@@ -1,5 +1,7 @@
 # Défi OpenBao — relevé
 
+> 🔴 **PARCOURS DÉFI**
+
 Sans commandes toutes faites, tu as :
 
 1. créé un **rôle PKI contraint** qui refuse réellement ce qui sort de son domaine et

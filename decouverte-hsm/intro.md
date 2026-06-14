@@ -1,5 +1,7 @@
 # Niveau 2 : la cérémonie de clés
 
+> 🟢 **PARCOURS DÉCOUVERTE** — lab guidé, les commandes te sont fournies.
+
 Depuis le niveau 0, une question est restée sous le tapis : **où vit la clé privée de
 ta CA ?** Jusqu'ici, dans un fichier sur le disque, protégé par un mot de passe. Pour
 un lab, parfait. Pour une CA racine en production, c'est le pire des cauchemars : qui

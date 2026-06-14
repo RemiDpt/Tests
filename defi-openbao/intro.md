@@ -1,5 +1,7 @@
 # Défi OpenBao — à toi de jouer
 
+> 🔴 **PARCOURS DÉFI** — aucune solution donnée, à toi de jouer.
+
 Même esprit que le défi step-ca : **pas de commandes toutes faites** pour le cœur de
 chaque étape. Un objectif, un critère vérifié par script, et à toi de trouver le
 chemin (`bao <commande> -help` est ton ami).

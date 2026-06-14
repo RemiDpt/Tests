@@ -1,5 +1,7 @@
 # Terminé
 
+> 🟢 **PARCOURS DÉCOUVERTE**
+
 Ce que tu as construit :
 - une CA interne prête à émettre pour des charges automatisées ;
 - un **token court** frappé par un orchestrateur de confiance ;

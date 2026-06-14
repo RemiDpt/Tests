@@ -1,5 +1,7 @@
 # OpenBao : des certificats courts, dynamiques, à la demande
 
+> 🟢 **PARCOURS DÉCOUVERTE** — lab guidé, les commandes te sont fournies.
+
 Aux niveaux 0 et 1, la CA (step-ca) émettait des certificats sur demande — à la main,
 puis automatiquement via un token court. Ici, on change de modèle : avec **OpenBao** (fork open
 source de HashiCorp Vault, hébergé par la Linux Foundation), le certificat devient un

@@ -1,5 +1,7 @@
 # Terminé
 
+> 🟢 **PARCOURS DÉCOUVERTE**
+
 Ce que tu as accompli — une cérémonie de clés de bout en bout :
 - créé un **token** dans un HSM (SoftHSM2) ;
 - **généré la clé de CA racine à l'intérieur** du module, jamais sur le disque ;

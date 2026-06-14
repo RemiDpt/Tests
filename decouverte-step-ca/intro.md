@@ -1,5 +1,7 @@
 # PKI niveau 0 : ta première autorité de certification
 
+> 🟢 **PARCOURS DÉCOUVERTE** — lab guidé, les commandes te sont fournies.
+
 Une PKI répond à une question toute simple mais vitale sur un réseau : « à qui je
 parle, et puis-je lui faire confiance ? » Derrière chaque cadenas de navigateur, il y
 a une autorité de certification qui a répondu à cette question. Tu vas en monter une,

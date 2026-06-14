@@ -1,5 +1,7 @@
 # Défi step-ca — à toi de jouer
 
+> 🔴 **PARCOURS DÉFI** — aucune solution donnée, à toi de jouer.
+
 Tu as déjà fait les labs « découverte » ? Ici, **on retire les commandes**. Chaque
 étape pose un **objectif** et un **critère de réussite** vérifié par un script — mais
 ne te donne pas la solution. À toi de mobiliser ce que tu sais (et `step --help`,
