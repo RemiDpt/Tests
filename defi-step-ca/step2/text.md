@@ -55,19 +55,30 @@ ssh-keygen -L -f /root/id_deploy-cert.pub
 `deploy` est à la fois le sujet et le principal du certificat. Le fichier
 `/root/id_deploy-cert.pub` est créé automatiquement à partir de `/root/id_deploy`.
 
-**Pourquoi cette approche.** Un certificat SSH remplace la gestion manuelle des
-`authorized_keys` : au lieu de recopier des clés publiques partout, un serveur fait
-confiance à **une** autorité, et tout certificat qu'elle signe (avec le bon principal)
-est accepté. Le **principal** (`deploy`) est l'équivalent SSH du nom d'utilisateur
-autorisé.
+**Pourquoi un certificat SSH plutôt qu'une clé dans `authorized_keys`**
 
-**Sous le capot.** `step ssh certificate` génère la paire de clés **et** demande à la
-CA un certificat pour la clé publique, le tout en une commande ; le résultat sort
-suffixé `-cert.pub`. La CA agit ici comme **CA SSH** (initialisée avec `--ssh`),
-distincte de sa fonction X.509.
+Le modèle « je copie ma clé publique dans le `authorized_keys` de chaque serveur » ne
+tient pas à l'échelle. Dès que tu as quelques centaines de machines, plus personne ne
+sait quelle clé traîne où ni à qui elle appartient, et le départ d'un collègue laisse
+des clés orphelines un peu partout. Avec un certificat SSH, le serveur ne fait confiance
+qu'à **une** autorité : tout certificat qu'elle signe, avec le bon principal, est
+accepté — sans rien recopier sur la machine. C'est le basculement qu'ont documenté de
+grosses infras comme Meta ou Uber : un développeur réclame un certificat valable
+quelques heures le matin, et le soir il a déjà expiré tout seul. Le `principal`
+(`deploy`) est l'équivalent SSH du nom de compte autorisé à se connecter.
 
-**Le piège — deux mots de passe à ne pas confondre.** `--provisioner-password-file`
-authentifie la **provisioner** auprès de la CA ; `--password-file` chiffre la **clé
-privée** générée. Comme `--password-file` et `--no-password` portent tous deux sur la
-clé, ils sont **incompatibles** : c'est l'erreur classique sur cette commande.
+**Une seule commande pour tout faire**
+
+`step ssh certificate` génère la paire de clés **et** va demander à la CA de signer la
+clé publique, d'un coup ; le certificat sort à côté, suffixé `-cert.pub`. Ici la CA
+joue son rôle d'autorité SSH — c'est ce qu'a activé le `--ssh` à l'initialisation — une
+casquette distincte de sa fonction X.509.
+
+**Le piège : deux mots de passe différents**
+
+C'est l'erreur classique sur cette commande. `--provisioner-password-file` authentifie
+la provisioner auprès de la CA (sans lui, `step` te bloque en attendant une saisie) ;
+`--password-file`, lui, chiffre la clé privée qui vient d'être générée. Et comme
+`--password-file` et `--no-password` parlent tous les deux de cette clé, ils s'excluent :
+tu en mets un, jamais les deux.
 </details>

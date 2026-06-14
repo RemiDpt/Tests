@@ -54,18 +54,27 @@ bao write -format=json pki/issue/prod common_name=app.lab.local ttl=10m | jq -r 
 bao write pki/issue/prod common_name=app.evil.com ttl=10m   # doit échouer
 ```
 
-**Pourquoi cette approche.** Dans OpenBao, la politique d'émission ne vit pas dans la
-CA mais dans le **rôle** : c'est lui qui décide quels noms et quelles durées sont
-permis. Un même moteur PKI peut ainsi exposer plusieurs rôles aux contraintes
-différentes (serveurs internes, clients, etc.).
+**Pourquoi la règle vit dans le rôle**
 
-**Sous le capot.** `allowed_domains` + `allow_subdomains` définissent les noms
-acceptés ; `max_ttl` est un **plafond** appliqué côté serveur. Demander `ttl=24h` ne
-lève pas forcément une erreur : OpenBao **ramène** la durée à `max_ttl`. La contrainte
-est donc vérifiée à l'émission, pas seulement déclarative.
+Chez OpenBao, la politique d'émission n'est pas dans la CA mais dans le **rôle** : c'est
+lui qui tranche quels noms et quelles durées sont permis. Un même moteur PKI peut donc
+exposer plusieurs rôles aux contraintes très différentes — un rôle `serveurs-internes`
+plafonné à `lab.local`, un rôle `clients-vpn` pour les certificats utilisateurs, un rôle
+`ci` ultra-court. Chaque équipe tape sur son rôle, et personne ne déborde sur le
+périmètre des autres.
 
-**Le piège.** Sans `allow_subdomains=true`, `lab.local` autoriserait le domaine nu
-mais **pas** `app.lab.local`. Et un rôle qui oublie `allowed_domains` (ou pose
-`allow_any_name=true`) signe **n'importe quoi** : c'est l'erreur de configuration qui
-ouvre la PKI en grand.
+**Un plafond, pas une suggestion**
+
+`allowed_domains` + `allow_subdomains` fixent les noms acceptés ; `max_ttl` est un
+plafond appliqué côté serveur. Demander `ttl=24h` ne déclenche pas forcément d'erreur :
+OpenBao **rabote** simplement la durée à `max_ttl`. La contrainte est donc bien vérifiée
+à l'émission, ce n'est pas qu'un vœu pieux dans la doc.
+
+**Le piège**
+
+Sans `allow_subdomains=true`, `lab.local` autoriserait le domaine nu mais pas
+`app.lab.local` — et tu passerais dix minutes à te demander pourquoi ça refuse. Pire
+dans l'autre sens : un rôle qui oublie `allowed_domains` (ou qui pose
+`allow_any_name=true`) signe **n'importe quoi**. C'est l'erreur de config qui ouvre la
+PKI en grand, et le genre de ligne qu'on retrouve, penaud, en post-mortem.
 </details>

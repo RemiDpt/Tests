@@ -68,19 +68,31 @@ step ca certificate app.lab.local good.crt good.key --token "$TOKEN" \
 Pour t'en convaincre, tente toi-même `app.evil.com` : la CA doit refuser de signer
 (`step ca certificate` se termine en erreur, aucun fichier produit).
 
-**Pourquoi cette approche.** Une politique transforme une liste blanche de noms en
-**règle vérifiée à la signature** : tout nom hors `*.lab.local` est rejeté par la CA
-elle-même, sans dépendre de la bonne volonté du demandeur. C'est la différence entre
-« je sais que je ne devrais pas » et « je ne peux pas ».
+**Pourquoi une politique, et pas juste de la discipline**
 
-**Sous le capot.** Le token JWK encode bien le nom demandé, mais c'est **la CA, au
-moment de signer**, qui confronte chaque nom du certificat à la liste `allow.dns`. Si
-un seul nom n'est pas autorisé, elle refuse — d'où l'échec propre côté client.
+Une politique transforme ta liste blanche de noms en règle vérifiée au moment de la
+signature. Tout nom en dehors de `*.lab.local` est refusé par la CA elle-même, peu
+importe ce que demande le client. C'est toute la différence entre « je sais que je ne
+devrais pas émettre ça » et « je ne peux pas ». En entreprise, c'est ce qui empêche une
+CA interne de signer un jour, par erreur ou par malveillance, un certificat pour
+`paypal.com` ou pour le domaine d'un concurrent — un certificat techniquement valide
+qui ferait des dégâts. C'est d'ailleurs pour ça que les autorités publiques imposent
+des *name constraints* aux sous-CA qu'elles délèguent à des entreprises.
 
-**Le piège — LE point de ce défi.** Sur un step-ca **auto-hébergé**, une `policy`
-posée sur une **provisioner** est **silencieusement ignorée** (c'est une fonctionnalité
-de l'offre hébergée). Résultat trompeur : tu crois bloquer, et `app.evil.com` passe
-quand même. Le seul niveau réellement appliqué ici est **`authority.policy`** — d'où
-la modification de `.authority.policy` et non de la provisioner. Et sans **redémarrage**
-de la CA, la nouvelle config n'est pas chargée.
+**Ce qui se passe à la signature**
+
+Le token JWK encode bien le nom demandé, mais c'est la CA, au moment de signer, qui
+confronte chaque nom du certificat à la liste `allow.dns`. Un seul nom non autorisé, et
+elle refuse en bloc — d'où l'échec propre côté client.
+
+**Le piège, et c'est tout le sujet du défi**
+
+Sur un step-ca auto-hébergé, une `policy` posée sur une **provisioner** est
+silencieusement ignorée : c'est une fonctionnalité réservée à l'offre hébergée payante.
+Le résultat est sournois — tu crois avoir verrouillé, et `app.evil.com` passe quand
+même, sans le moindre avertissement. Le seul niveau réellement appliqué ici, c'est
+`authority.policy` : d'où la modif de `.authority.policy` et pas de la provisioner. Et
+tant que tu n'as pas redémarré la CA, la nouvelle config n'est pas chargée. C'est
+typiquement le genre de fausse sécurité qui passe une revue d'archi et ressort six mois
+plus tard, en plein audit.
 </details>

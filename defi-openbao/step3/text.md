@@ -60,18 +60,29 @@ echo "$TOKEN" > /root/ci_token.txt
 echo "Token AppRole enregistré."
 ```
 
-**Pourquoi cette approche.** Un runner CI ne doit jamais détenir le token `root`. Le
-bon modèle : une **policy** minimale (juste émettre), une identité de **machine**
-(AppRole = `role_id` public + `secret_id` secret, comme login/mot de passe), et un
-**token** dérivé qui n'a que les droits de la policy.
+**Pourquoi un runner ne touche jamais au token root**
 
-**Sous le capot.** Dans OpenBao, **tout est refusé par défaut** : la policy `ci`
-n'ouvre QUE `pki/issue/prod`. Le `role_id`/`secret_id` servent à se **connecter**
-(`approle/login`), ce qui renvoie un token court porteur de cette seule policy. C'est
-ce token-là que le runner utilise — révocable et limité dans le temps (`token_ttl`).
+Imagine ton pipeline GitLab qui build et déploie : s'il détient le token `root` du
+coffre, le moindre script piégé dans une dépendance peut tout lire et tout casser. Le
+bon modèle, c'est l'inverse — une policy minimale (juste émettre un certificat), une
+identité de **machine** (AppRole = `role_id` public + `secret_id` secret, exactement
+comme un login/mot de passe de service), et un token dérivé qui ne porte que les droits
+de cette policy. Le runner ne sait rien faire d'autre, par construction.
 
-**Le piège.** Ne confonds pas les identifiants : `role_id` est l'identifiant stable du
-rôle, `secret_id` est le secret jetable. Et la policy n'autorise que `create`/`update`
-sur **un seul chemin** : si tu y ajoutes `pki/roles/*` ou `sys/*`, tu redonnes au runner
-le pouvoir que tout ce dispositif cherche justement à lui retirer.
+**Tout est refusé par défaut**
+
+C'est le principe d'OpenBao : au départ, aucun droit. La policy `ci` n'ouvre QUE
+`pki/issue/prod`. Le couple `role_id`/`secret_id` sert à se connecter (`approle/login`),
+ce qui renvoie un token court porteur de cette seule policy. C'est ce token-là que le
+runner utilise au quotidien — révocable d'un geste et limité dans le temps via
+`token_ttl`.
+
+**Le piège**
+
+Ne mélange pas les deux identifiants : `role_id` est l'identité stable du rôle,
+`secret_id` est le secret jetable qu'on fait tourner régulièrement. Et garde la policy
+étroite : elle n'autorise que `create`/`update` sur **un seul chemin**. Le jour où,
+« juste pour dépanner », quelqu'un y ajoute `pki/roles/*` ou `sys/*`, il rend au runner
+tout le pouvoir que ce dispositif servait justement à lui retirer — et la belle
+isolation s'effondre.
 </details>

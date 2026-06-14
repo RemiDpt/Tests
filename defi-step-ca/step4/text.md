@@ -79,19 +79,29 @@ step ca certificate test.lab.local /tmp/t.crt /tmp/t.key --token "$TOKEN" \
 openssl x509 -in /tmp/t.crt -noout -subject
 ```
 
-**Pourquoi cette approche.** Une politique **autorise ou refuse** ; un template
-**fabrique le contenu**. Tu décides ce que portera *tout* certificat émis (ici l'OU),
-indépendamment de ce que le demandeur réclame — utile pour imposer des usages de clé,
-une OU, ou interdire qu'une feuille soit une CA.
+**Politique et template, deux outils complémentaires**
 
-**Sous le capot.** À chaque émission, step-ca applique ce gabarit (style Go) pour
-produire le JSON du certificat. C'est pourquoi tu **réinjectes** `commonName` et `sans`
-depuis la demande (`{{ toJson … }}`) : ce que tu n'écris pas dans le template
-**disparaît** du certificat. Les valeurs que tu figes en dur (l'OU) s'imposent, elles.
+Une politique autorise ou refuse ; un template, lui, fabrique le contenu. Tu décides ce
+que portera *chaque* certificat émis — ici l'OU `PKI-Defi` — quoi que demande le client.
+C'est l'outil pour imposer des usages de clé, une unité organisationnelle, ou interdire
+qu'une feuille se retrouve marquée comme CA. Dans une banque ou un grand groupe, c'est
+ce qui garantit que tous les certificats serveurs portent la même OU et les mêmes
+extensions, peu importe quel développeur les demande : la conformité ne repose pas sur
+la bonne volonté de chacun, elle est cousue dans la CA.
 
-**Le piège.** Deux choses. D'abord, à la différence d'une `policy`, le template
-(`options.x509.templateFile`) au **niveau provisioner** est bien pris en compte en
-self-hosted — ne confonds pas les deux mécanismes. Ensuite, comme toute modif de
-`ca.json`, le template n'est actif qu'après **redémarrage** de la CA ; et un template
-incomplet (sujet/SANs oubliés) casse l'émission au lieu de l'enrichir.
+**Ce que le template garde, ce qu'il jette**
+
+À chaque émission, step-ca applique ce gabarit (syntaxe Go) pour produire le JSON du
+certificat. D'où le `{{ toJson … }}` : tu **réinjectes** le `commonName` et les `sans`
+venus de la demande, parce que tout ce que tu n'écris pas dans le template **disparaît**
+du certificat. À l'inverse, les valeurs que tu figes en dur — l'OU — s'imposent sans
+discussion.
+
+**Le piège**
+
+Deux choses. D'abord, ne confonds pas les deux mécanismes : contrairement à une
+`policy`, un template au niveau provisioner (`options.x509.templateFile`) est bien pris
+en compte en self-hosted. Ensuite, comme toute modif de `ca.json`, le template ne
+devient actif qu'après un redémarrage de la CA — et un template incomplet, où tu aurais
+oublié le sujet ou les SANs, casse l'émission au lieu de l'enrichir.
 </details>

@@ -71,22 +71,30 @@ bao write pki_int/roles/leaf allowed_domains=lab.local allow_subdomains=true max
 bao write -format=json pki_int/issue/leaf common_name=svc.lab.local ttl=10m | jq -r .data.certificate
 ```
 
-**Pourquoi cette approche.** En production, on ne laisse pas un serveur applicatif être
-sa propre racine de confiance. La **racine** reste hors-ligne (ici, OpenSSL en joue le
-rôle) et ne signe que de rares **intermédiaires** ; OpenBao n'héberge qu'une
-intermédiaire, qui émet les feuilles au quotidien. Si OpenBao est compromis, on révoque
-l'intermédiaire sans rejouer toute la PKI.
+**Pourquoi OpenBao n'est presque jamais la racine**
 
-**Sous le capot.** OpenBao ne te donne **jamais** la clé privée de l'intermédiaire :
-`generate/internal` la crée et la garde en interne, ne sortant qu'une **CSR**. La racine
-externe signe cette CSR (en lui accordant `CA:TRUE` + `keyCertSign`), puis `set-signed`
-réinjecte le certificat obtenu — OpenBao le marie alors à la clé qu'il avait gardée. La
-chaîne de confiance est reconstituée sans que le secret ne quitte jamais le coffre.
+En vrai, on ne laisse pas un serveur applicatif être sa propre racine de confiance. La
+racine reste hors-ligne — ici, OpenSSL en joue le rôle — et ne signe qu'une poignée
+d'intermédiaires. OpenBao, lui, n'héberge qu'une intermédiaire, qui émet les feuilles au
+quotidien. L'intérêt est très concret : le jour où OpenBao est compromis, tu révoques
+*son* intermédiaire et tu en réémets une depuis la racine, sans reconstruire toute la
+PKI ni redéployer une nouvelle racine sur chaque poste de l'entreprise. C'est le
+découpage qu'on retrouve dans toutes les grosses infras.
 
-**Le piège.** Deux écueils classiques. D'abord, `set-signed` attend la **chaîne
-complète** : on concatène l'intermédiaire **et** la racine (`int_chain.crt`) — sinon les
-clients ne sauront pas remonter jusqu'à la racine. Ensuite, l'`-extfile <(...)` utilise
-une **substitution de processus** propre à bash : la signature doit porter
-`basicConstraints=critical,CA:TRUE`, faute de quoi l'intermédiaire ne sera pas reconnue
-comme une CA et n'émettra rien.
+**Le secret ne sort jamais du coffre**
+
+OpenBao ne te livre jamais la clé privée de l'intermédiaire : `generate/internal` la
+crée et la garde en interne, ne te tendant qu'une CSR. La racine externe signe cette CSR
+— en lui accordant `CA:TRUE` et `keyCertSign` — puis `set-signed` réinjecte le
+certificat obtenu, qu'OpenBao marie à la clé gardée par-devers lui. La chaîne de
+confiance est reconstituée sans que le secret ait quitté le coffre une seule fois.
+
+**Le piège**
+
+Deux écueils classiques. D'abord, `set-signed` attend la **chaîne complète** : tu
+concatènes l'intermédiaire **et** la racine dans `int_chain.crt`, sinon les clients
+n'auront pas de quoi remonter jusqu'à la racine. Ensuite, le `-extfile <(...)` repose
+sur une substitution de processus propre à bash, et la signature doit absolument porter
+`basicConstraints=critical,CA:TRUE` — sans ça, l'intermédiaire ne sera pas reconnue
+comme une CA et n'émettra rien du tout.
 </details>

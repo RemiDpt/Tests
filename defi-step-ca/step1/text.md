@@ -49,18 +49,32 @@ step certificate create www.lab.local leaf.crt leaf.key \
 openssl verify -CAfile root.crt -untrusted intermediate.crt leaf.crt
 ```
 
-**Pourquoi cette approche.** Tout se joue dans le `--profile` : il encode les
-contraintes que tu n'as pas à écrire à la main. `root-ca` produit un certificat
-**auto-signé** marqué `CA:TRUE` ; `intermediate-ca` est aussi une CA, mais signée par
-un parent ; `leaf` n'est **pas** une CA et reçoit les usages d'un certificat serveur.
+**Pourquoi on monte la chaîne à la main**
 
-**Sous le capot.** `--ca`/`--ca-key` désignent le **signataire** : l'intermédiaire est
-signé par la racine, la feuille par l'intermédiaire. Côté vérification, `-untrusted`
-fournit à OpenSSL le maillon intermédiaire pour qu'il **reconstruise la chaîne**
-feuille → intermédiaire → racine ; seule la racine est une ancre de confiance (`-CAfile`).
+Tout se joue dans le `--profile`. Plutôt que d'aller écrire à la main des extensions
+X.509 obscures, tu choisis un rôle et `step` pose les bonnes contraintes pour toi :
+`root-ca` sort un certificat auto-signé marqué `CA:TRUE`, `intermediate-ca` reste une
+CA mais signée par un parent, et `leaf` n'est surtout pas une CA — elle reçoit les
+usages d'un certificat serveur classique. C'est la hiérarchie qu'on retrouve dans
+n'importe quelle boîte : une racine maison, puis une intermédiaire **par usage** — une
+pour les serveurs web, une pour le VPN, une pour la signature de code — et des milliers
+de feuilles en bout de chaîne.
 
-**Le piège.** Ne signe **jamais la feuille directement par la racine** : dans une vraie
-PKI la racine ne signe que des intermédiaires et reste hors-ligne. Et respecte l'ordre
-de création (racine, puis intermédiaire, puis feuille) — chaque niveau a besoin du
-précédent pour être signé.
+**Qui signe qui**
+
+`--ca` et `--ca-key`, c'est juste « avec quelle autorité je signe ce certificat ». La
+racine signe l'intermédiaire, l'intermédiaire signe la feuille. À la vérification,
+`-untrusted` tend à OpenSSL le maillon du milieu pour qu'il rebâtisse le chemin
+feuille → intermédiaire → racine ; la seule vraie ancre de confiance, c'est la racine
+passée à `-CAfile`. Ton navigateur fait exactement ce raisonnement à chaque connexion
+HTTPS.
+
+**Le piège à éviter**
+
+Ne signe jamais une feuille directement avec la racine. Dans une vraie PKI, la racine
+ne signe que des intermédiaires, et le reste du temps elle dort hors-ligne, parfois
+dans un coffre. Une racine compromise, c'est toute la PKI à reconstruire et à
+redistribuer sur chaque poste du parc — le genre d'incident qui occupe une équipe
+sécurité pendant des semaines. Respecte aussi l'ordre : racine, puis intermédiaire,
+puis feuille — chaque niveau a besoin de celui du dessus pour être signé.
 </details>
