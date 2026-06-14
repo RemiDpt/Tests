@@ -1,39 +1,55 @@
-# Étape 4 — Révoquer, lire la CRL… et comprendre pourquoi c'est rare
+# Étape 4 — Limiter les pouvoirs : policy + AppRole
 
-Émettre d'abord un certificat un peu plus durable (1 h), pour avoir quelque chose à
-révoquer :
+> ⚠️ **ÉTAPE À TESTER EN LIVE — non validée sur Killercoda.** L'enchaînement policy +
+> AppRole (`approle/login`, token réduit) est à reproduire en conditions réelles avant
+> publication.
 
-```
-bao write -format=json pki/issue/serveur-court \
-  common_name=revoque-moi.lab.local ttl=1h > /root/cert2.json
-SERIAL=$(jq -r .data.serial_number /root/cert2.json)
-echo "Serial : $SERIAL"
-```{{exec}}
+Jusqu'ici, tout passait par le token `root` — pratique en lab, impensable ailleurs. En
+vrai, un consommateur (un job CI, un service) reçoit une **identité réduite** : le droit
+d'émettre, et **rien d'autre**. Deux briques pour ça : une **policy** (la liste des
+permissions) et une **méthode d'auth** (ici **AppRole**, l'identifiant/secret d'une
+machine).
 
-Révoquer par numéro de série :
-
-```
-bao write pki/revoke serial_number=$SERIAL
-```{{exec}}
-
-La CRL (liste de révocation) signée par la CA contient maintenant une entrée :
+D'abord, une policy qui n'autorise **que** l'émission via le rôle `serveur-court` créé à
+l'étape 2 :
 
 ```
-curl -s $BAO_ADDR/v1/pki/crl/pem | openssl crl -noout -text | head -25
+cat > /tmp/issuer.hcl <<'EOF'
+path "pki/issue/serveur-court" {
+  capabilities = ["create", "update"]
+}
+EOF
+bao policy write issuer /tmp/issuer.hcl
 ```{{exec}}
 
-Repère le bloc `Revoked Certificates` avec le numéro de série du certificat.
+Activer AppRole et créer un rôle `runner` porteur de cette seule policy :
 
----
+```
+bao auth enable approle
+bao write auth/approle/role/runner token_policies=issuer token_ttl=20m
+```{{exec}}
 
-**Pourquoi tu en auras rarement besoin.** Dans OpenBao (comme dans les versions
-modernes de Vault), les certificats émis par le moteur PKI ne sont **pas suivis par
-un bail (lease)** : la révocation est une action explicite, par numéro de série,
-comme tu viens de le faire. Et la philosophie assumée est : **des durées de vie
-courtes valent mieux que la révocation**. Une CRL doit être générée, distribuée,
-téléchargée et vérifiée par les clients — un certificat de 2 minutes expire souvent
-avant même que la CRL soit propagée.
+Récupérer les identifiants de la machine (`role_id` stable + `secret_id` jetable), puis
+**se connecter** pour obtenir un token réduit :
 
-C'est le même fil rouge depuis le niveau 0 : durée courte + renouvellement
-automatique = moins de dépendance à la révocation, et la capacité de changer
-d'algorithme — demain post-quantique — à la vitesse du renouvellement.
+```
+ROLE_ID=$(bao read -field=role_id auth/approle/role/runner/role-id)
+SECRET_ID=$(bao write -f -field=secret_id auth/approle/role/runner/secret-id)
+CI_TOKEN=$(bao write -field=token auth/approle/login role_id="$ROLE_ID" secret_id="$SECRET_ID")
+echo "Token CI obtenu : ${CI_TOKEN:0:12}..."
+```{{exec}}
+
+Vérifier le périmètre de ce token : il **peut** émettre, mais **ne peut pas** créer un
+nouveau rôle (la 2ᵉ commande doit afficher `permission denied`) :
+
+```
+BAO_TOKEN=$CI_TOKEN bao write -format=json pki/issue/serveur-court \
+  common_name=ci.lab.local ttl=2m | jq -r .data.serial_number
+BAO_TOKEN=$CI_TOKEN bao write pki/roles/pirate allowed_domains=evil.com
+```{{exec}}
+
+> C'est tout l'intérêt : dans OpenBao **tout est refusé par défaut**. La policy `issuer`
+> n'ouvre qu'un seul chemin ; le token qui en hérite ne sait rien faire d'autre. Compromis
+> demain, il n'émet que des certificats `lab.local` courts — et expire en 20 minutes.
+
+Cliquer sur **Check** une fois l'AppRole en place.

@@ -24,6 +24,6 @@ openssl x509 -in /root/app.crt -noout -subject -startdate -enddate
 
 Attends 2 minutes et relance la commande `openssl` ci-dessus : le certificat est
 expiré. Personne ne l'a révoqué — il est mort de sa belle mort. Retiens ce point
-pour l'étape 4.
+pour l'étape 5.
 
 Cliquer sur **Check**.

@@ -10,7 +10,8 @@
       { "title": "Démarrer OpenBao", "text": "step1/text.md", "verify": "step1/verify.sh" },
       { "title": "Monter le moteur PKI et créer la CA", "text": "step2/text.md", "verify": "step2/verify.sh" },
       { "title": "Émettre un certificat de 2 minutes", "text": "step3/text.md", "verify": "step3/verify.sh" },
-      { "title": "Révoquer et comprendre", "text": "step4/text.md" }
+      { "title": "Limiter les pouvoirs : policy + AppRole", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "Révoquer et comprendre", "text": "step5/text.md" }
     ],
     "finish": {
       "text": "finish.md"
