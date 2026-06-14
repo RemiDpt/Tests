@@ -1,9 +1,5 @@
 # Étape 4 — ACME : le renouvellement qui se déclenche tout seul
 
-> ⚠️ **ÉTAPE À TESTER EN LIVE — non validée sur Killercoda.** L'enchaînement provisioner
-> ACME + `acme.sh` en HTTP-01 standalone est à reproduire en conditions réelles avant
-> publication.
-
 Le modèle token de l'étape 3 est parfait pour un **job** qui démarre, réclame son
 certificat, puis meurt. Mais un **serveur qui tourne en continu** — une API, un nginx —
 ne « rejoue » aucun pipeline : il a juste besoin que son certificat se renouvelle tout
