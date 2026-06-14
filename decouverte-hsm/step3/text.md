@@ -4,6 +4,15 @@ Toute la promesse du HSM tient en deux affirmations qui semblent contradictoires
 clé privée est **inutilisable de l'extérieur**, et pourtant elle **signe**. Vérifions
 les deux.
 
+```text
+   ┌─ HSM — token « CA-Root-HSM » ───────────────
+   │  Clé privée de la CA racine
+   │  née ici, marquée « non extractible »
+   │      │  signe  (la clé ne franchit jamais cette frontière)
+   │      ▼
+   └─► Certificat racine (ca-hsm.crt)   ← seul le résultat signé sort
+```
+
 Si besoin, ré-exporte le module :
 
 ```

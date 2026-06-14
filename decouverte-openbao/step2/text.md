@@ -28,6 +28,21 @@ bao write pki/roles/serveur-court \
   ttl=2m max_ttl=1h
 ```{{exec}}
 
+L'architecture que tu viens de monter :
+
+```text
+   OpenBao  (moteur PKI sur le chemin pki/)
+   │
+   ├─ CA interne — clé privée générée et gardée à l'intérieur,
+   │              elle ne sort jamais d'OpenBao
+   │      │  signe
+   │      ▼
+   └─ Rôle « serveur-court »  (domaines + durée max autorisés)
+          │  pki/issue
+          ▼
+      Certificat dynamique (~2 minutes)
+```
+
 > Compare avec le niveau 0 : chez step-ca, la politique d'émission vivait dans la
 > *provisioner* ; ici elle vit dans le *rôle*. Même principe dans les deux cas : on
 > ne laisse jamais un demandeur choisir librement le contenu de son certificat. En

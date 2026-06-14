@@ -7,6 +7,19 @@ Voici la scène, en deux rôles que tu vas jouer l'un après l'autre :
 - **le job de pipeline**, lui, ne connaît aucun secret. Il reçoit seulement ce token,
   et s'en sert pour réclamer son certificat.
 
+Le flux, en une image :
+
+```text
+  Orchestrateur de confiance ──(1) step ca token──► TOKEN court
+   (détient le secret)                                  │
+                                                        │ remis au job
+                                                        ▼
+  Job de pipeline ──(2) step ca certificate --token──► CA step-ca
+   (aucun secret durable)                               │ (3) signe
+                                                        ▼
+                                              cert.pem (~24 h)
+```
+
 D'abord, l'orchestrateur frappe le token (c'est ici, et **seulement ici**, qu'on
 utilise le mot de passe de la provisioner) :
 
