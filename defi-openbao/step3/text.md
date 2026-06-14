@@ -59,4 +59,19 @@ TOKEN=$(bao write -field=token auth/approle/login role_id="$ROLE_ID" secret_id="
 echo "$TOKEN" > /root/ci_token.txt
 echo "Token AppRole enregistré."
 ```
+
+**Pourquoi cette approche.** Un runner CI ne doit jamais détenir le token `root`. Le
+bon modèle : une **policy** minimale (juste émettre), une identité de **machine**
+(AppRole = `role_id` public + `secret_id` secret, comme login/mot de passe), et un
+**token** dérivé qui n'a que les droits de la policy.
+
+**Sous le capot.** Dans OpenBao, **tout est refusé par défaut** : la policy `ci`
+n'ouvre QUE `pki/issue/prod`. Le `role_id`/`secret_id` servent à se **connecter**
+(`approle/login`), ce qui renvoie un token court porteur de cette seule policy. C'est
+ce token-là que le runner utilise — révocable et limité dans le temps (`token_ttl`).
+
+**Le piège.** Ne confonds pas les identifiants : `role_id` est l'identifiant stable du
+rôle, `secret_id` est le secret jetable. Et la policy n'autorise que `create`/`update`
+sur **un seul chemin** : si tu y ajoutes `pki/roles/*` ou `sys/*`, tu redonnes au runner
+le pouvoir que tout ce dispositif cherche justement à lui retirer.
 </details>

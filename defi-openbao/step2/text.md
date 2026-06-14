@@ -47,4 +47,20 @@ bao write pki/revoke serial_number=$SERIAL
 
 curl -s $BAO_ADDR/v1/pki/crl/pem | openssl crl -noout -text | head -25
 ```
+
+**Pourquoi cette approche.** Révoquer, c'est déclarer un certificat **invalide avant
+son expiration**. OpenBao identifie chaque certificat par son **numéro de série** ;
+c'est la clé qu'on lui passe pour le révoquer, et celle qu'on retrouve ensuite dans la
+liste de révocation (CRL).
+
+**Sous le capot.** À la révocation, OpenBao régénère sa **CRL** — un document signé par
+la CA, qui énumère les séries révoquées. Les clients qui la téléchargent savent alors
+refuser ce certificat. `openssl crl -text` te la rend lisible.
+
+**Le piège.** Tu dois capturer le **bon** numéro de série (celui renvoyé à l'émission,
+au format hexadécimal à deux-points) — d'où le passage par `jq .data.serial_number`.
+Et garde en tête le fil rouge du parcours : la CRL doit être **distribuée et
+re-téléchargée** pour servir ; sur des certificats très courts, l'expiration arrive
+souvent avant que la révocation ne se propage — d'où la préférence pour les durées
+courtes.
 </details>

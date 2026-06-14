@@ -53,4 +53,19 @@ Vérifie toi-même :
 bao write -format=json pki/issue/prod common_name=app.lab.local ttl=10m | jq -r .data.serial_number
 bao write pki/issue/prod common_name=app.evil.com ttl=10m   # doit échouer
 ```
+
+**Pourquoi cette approche.** Dans OpenBao, la politique d'émission ne vit pas dans la
+CA mais dans le **rôle** : c'est lui qui décide quels noms et quelles durées sont
+permis. Un même moteur PKI peut ainsi exposer plusieurs rôles aux contraintes
+différentes (serveurs internes, clients, etc.).
+
+**Sous le capot.** `allowed_domains` + `allow_subdomains` définissent les noms
+acceptés ; `max_ttl` est un **plafond** appliqué côté serveur. Demander `ttl=24h` ne
+lève pas forcément une erreur : OpenBao **ramène** la durée à `max_ttl`. La contrainte
+est donc vérifiée à l'émission, pas seulement déclarative.
+
+**Le piège.** Sans `allow_subdomains=true`, `lab.local` autoriserait le domaine nu
+mais **pas** `app.lab.local`. Et un rôle qui oublie `allowed_domains` (ou pose
+`allow_any_name=true`) signe **n'importe quoi** : c'est l'erreur de configuration qui
+ouvre la PKI en grand.
 </details>

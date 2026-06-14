@@ -54,6 +54,20 @@ ssh-keygen -L -f /root/id_deploy-cert.pub
 
 `deploy` est à la fois le sujet et le principal du certificat. Le fichier
 `/root/id_deploy-cert.pub` est créé automatiquement à partir de `/root/id_deploy`.
-Ici `--provisioner-password-file` authentifie la provisioner `admin`, et
-`--password-file` chiffre la clé privée (sans intérêt en lab, mais évite tout prompt).
+
+**Pourquoi cette approche.** Un certificat SSH remplace la gestion manuelle des
+`authorized_keys` : au lieu de recopier des clés publiques partout, un serveur fait
+confiance à **une** autorité, et tout certificat qu'elle signe (avec le bon principal)
+est accepté. Le **principal** (`deploy`) est l'équivalent SSH du nom d'utilisateur
+autorisé.
+
+**Sous le capot.** `step ssh certificate` génère la paire de clés **et** demande à la
+CA un certificat pour la clé publique, le tout en une commande ; le résultat sort
+suffixé `-cert.pub`. La CA agit ici comme **CA SSH** (initialisée avec `--ssh`),
+distincte de sa fonction X.509.
+
+**Le piège — deux mots de passe à ne pas confondre.** `--provisioner-password-file`
+authentifie la **provisioner** auprès de la CA ; `--password-file` chiffre la **clé
+privée** générée. Comme `--password-file` et `--no-password` portent tous deux sur la
+clé, ils sont **incompatibles** : c'est l'erreur classique sur cette commande.
 </details>

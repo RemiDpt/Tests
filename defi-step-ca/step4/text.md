@@ -78,4 +78,20 @@ step ca certificate test.lab.local /tmp/t.crt /tmp/t.key --token "$TOKEN" \
   --ca-url https://localhost:4443 --root "$(step path)/certs/root_ca.crt" --force
 openssl x509 -in /tmp/t.crt -noout -subject
 ```
+
+**Pourquoi cette approche.** Une politique **autorise ou refuse** ; un template
+**fabrique le contenu**. Tu décides ce que portera *tout* certificat émis (ici l'OU),
+indépendamment de ce que le demandeur réclame — utile pour imposer des usages de clé,
+une OU, ou interdire qu'une feuille soit une CA.
+
+**Sous le capot.** À chaque émission, step-ca applique ce gabarit (style Go) pour
+produire le JSON du certificat. C'est pourquoi tu **réinjectes** `commonName` et `sans`
+depuis la demande (`{{ toJson … }}`) : ce que tu n'écris pas dans le template
+**disparaît** du certificat. Les valeurs que tu figes en dur (l'OU) s'imposent, elles.
+
+**Le piège.** Deux choses. D'abord, à la différence d'une `policy`, le template
+(`options.x509.templateFile`) au **niveau provisioner** est bien pris en compte en
+self-hosted — ne confonds pas les deux mécanismes. Ensuite, comme toute modif de
+`ca.json`, le template n'est actif qu'après **redémarrage** de la CA ; et un template
+incomplet (sujet/SANs oubliés) casse l'émission au lieu de l'enrichir.
 </details>

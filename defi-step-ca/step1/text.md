@@ -48,4 +48,19 @@ step certificate create www.lab.local leaf.crt leaf.key \
 
 openssl verify -CAfile root.crt -untrusted intermediate.crt leaf.crt
 ```
+
+**Pourquoi cette approche.** Tout se joue dans le `--profile` : il encode les
+contraintes que tu n'as pas à écrire à la main. `root-ca` produit un certificat
+**auto-signé** marqué `CA:TRUE` ; `intermediate-ca` est aussi une CA, mais signée par
+un parent ; `leaf` n'est **pas** une CA et reçoit les usages d'un certificat serveur.
+
+**Sous le capot.** `--ca`/`--ca-key` désignent le **signataire** : l'intermédiaire est
+signé par la racine, la feuille par l'intermédiaire. Côté vérification, `-untrusted`
+fournit à OpenSSL le maillon intermédiaire pour qu'il **reconstruise la chaîne**
+feuille → intermédiaire → racine ; seule la racine est une ancre de confiance (`-CAfile`).
+
+**Le piège.** Ne signe **jamais la feuille directement par la racine** : dans une vraie
+PKI la racine ne signe que des intermédiaires et reste hors-ligne. Et respecte l'ordre
+de création (racine, puis intermédiaire, puis feuille) — chaque niveau a besoin du
+précédent pour être signé.
 </details>

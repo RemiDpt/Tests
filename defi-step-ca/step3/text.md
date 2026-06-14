@@ -67,4 +67,20 @@ step ca certificate app.lab.local good.crt good.key --token "$TOKEN" \
 
 Pour t'en convaincre, tente toi-même `app.evil.com` : la CA doit refuser de signer
 (`step ca certificate` se termine en erreur, aucun fichier produit).
+
+**Pourquoi cette approche.** Une politique transforme une liste blanche de noms en
+**règle vérifiée à la signature** : tout nom hors `*.lab.local` est rejeté par la CA
+elle-même, sans dépendre de la bonne volonté du demandeur. C'est la différence entre
+« je sais que je ne devrais pas » et « je ne peux pas ».
+
+**Sous le capot.** Le token JWK encode bien le nom demandé, mais c'est **la CA, au
+moment de signer**, qui confronte chaque nom du certificat à la liste `allow.dns`. Si
+un seul nom n'est pas autorisé, elle refuse — d'où l'échec propre côté client.
+
+**Le piège — LE point de ce défi.** Sur un step-ca **auto-hébergé**, une `policy`
+posée sur une **provisioner** est **silencieusement ignorée** (c'est une fonctionnalité
+de l'offre hébergée). Résultat trompeur : tu crois bloquer, et `app.evil.com` passe
+quand même. Le seul niveau réellement appliqué ici est **`authority.policy`** — d'où
+la modification de `.authority.policy` et non de la provisioner. Et sans **redémarrage**
+de la CA, la nouvelle config n'est pas chargée.
 </details>
