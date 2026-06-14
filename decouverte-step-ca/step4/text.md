@@ -1,9 +1,5 @@
 # Étape 4 — Émettre un certificat SSH
 
-> ⚠️ **ÉTAPE À TESTER EN LIVE — non validée sur Killercoda.** La combinaison
-> `step ca init --ssh` + `step ssh certificate` est à reproduire en conditions réelles
-> avant publication.
-
 Une CA step-ca ne fait pas que du X.509. Comme tu l'as initialisée avec `--ssh`, elle
 est **aussi une autorité SSH**. L'intérêt : au lieu de recopier des clés publiques dans
 les `authorized_keys` de chaque serveur, tu fais confiance à **une** autorité — et tout

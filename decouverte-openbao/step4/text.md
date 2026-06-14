@@ -1,9 +1,5 @@
 # Étape 4 — Limiter les pouvoirs : policy + AppRole
 
-> ⚠️ **ÉTAPE À TESTER EN LIVE — non validée sur Killercoda.** L'enchaînement policy +
-> AppRole (`approle/login`, token réduit) est à reproduire en conditions réelles avant
-> publication.
-
 Jusqu'ici, tout passait par le token `root` — pratique en lab, impensable ailleurs. En
 vrai, un consommateur (un job CI, un service) reçoit une **identité réduite** : le droit
 d'émettre, et **rien d'autre**. Deux briques pour ça : une **policy** (la liste des
