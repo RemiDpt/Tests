@@ -12,8 +12,8 @@ C'est une PKI complète — HTTPS **et** SSH — en moins de 30 minutes et sans 
 locale.
 
 **Suite du parcours :**
-1. **niveau 1 (token court)** — automatiser l'émission sans secret durable.
-2. **OpenBao** — certificats dynamiques à durée de vie courte.
-3. **niveau 2 (HSM)** — protéger la clé de la CA dans un module matériel.
+- **Step-ca, token court** — automatiser l'émission sans secret durable.
+- **OpenBao** — certificats dynamiques à durée de vie courte.
+- **HSM** — protéger la clé de la CA dans un module matériel.
 
 Chaque brique réutilise la même mécanique de scénario que celle-ci.

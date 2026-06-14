@@ -1,6 +1,6 @@
 # Scénario Killercoda — Cérémonie de clés avec un HSM (SoftHSM2/PKCS#11)
 
-Cinquième lab du parcours PKI (« niveau 2 »). Prérequis : niveau 0 (clé privée, CA, racine).
+Lab du parcours PKI. Prérequis : les bases (clé privée, CA, racine).
 
 ## Idée
 Mettre en scène une cérémonie de clés : la clé de la CA racine est générée DANS un HSM

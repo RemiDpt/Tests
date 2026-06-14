@@ -34,6 +34,6 @@ courtes valent mieux que la révocation**. Une CRL doit être générée, distri
 téléchargée et vérifiée par les clients — un certificat de 2 minutes expire souvent
 avant même que la CRL soit propagée.
 
-C'est le même fil rouge depuis le niveau 0 : durée courte + renouvellement
+C'est le même fil rouge depuis le début : durée courte + renouvellement
 automatique = moins de dépendance à la révocation, et la capacité de changer
 d'algorithme — demain post-quantique — à la vitesse du renouvellement.

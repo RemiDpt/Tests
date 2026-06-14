@@ -43,7 +43,7 @@ L'architecture que tu viens de monter :
       Certificat dynamique (~2 minutes)
 ```
 
-> Compare avec le niveau 0 : chez step-ca, la politique d'émission vivait dans la
+> Côté step-ca, la politique d'émission vivait dans la
 > *provisioner* ; ici elle vit dans le *rôle*. Même principe dans les deux cas : on
 > ne laisse jamais un demandeur choisir librement le contenu de son certificat. En
 > entreprise, on expose typiquement un rôle par environnement — `prod`, `recette`,

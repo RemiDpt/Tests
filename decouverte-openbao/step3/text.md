@@ -20,7 +20,7 @@ openssl x509 -in /root/app.crt -noout -subject -startdate -enddate
 > Deux minutes, c'est volontairement provocateur. L'idée : le certificat vit le
 > temps d'un déploiement ou d'une connexion, puis meurt. Le demandeur (un service,
 > un job CI) le redemande à chaque besoin — c'est le modèle « secret dynamique ».
-> Compare avec le niveau 0, où le certificat de 24 h passait déjà pour court.
+> Compare avec step-ca, où le certificat de 24 h passait déjà pour court.
 
 Attends 2 minutes et relance la commande `openssl` ci-dessus : le certificat est
 expiré. Personne ne l'a révoqué — il est mort de sa belle mort. Retiens ce point

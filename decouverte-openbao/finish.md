@@ -13,9 +13,9 @@ Ce que tu as construit :
   courtes la rendent rarement nécessaire.
 
 Trois modèles d'émission vus jusqu'ici :
-1. **niveau 0** : émission manuelle (step-ca) ;
-2. **niveau 1** : émission automatique par token court (identité de charge de travail) ;
-3. **ici** : secret dynamique à durée courte (OpenBao).
+1. **émission manuelle** (step-ca) ;
+2. **émission automatique par token court** (identité de charge de travail, step-ca) ;
+3. **secret dynamique à durée courte** (OpenBao, ici).
 
 **Pour aller plus loin :**
 - monter une **intermédiaire** dans OpenBao signée par une racine externe (hiérarchie réaliste) ;
@@ -23,4 +23,4 @@ Trois modèles d'émission vus jusqu'ici :
 - comparer avec l'agent OpenBao/Vault qui renouvelle automatiquement les certificats.
 
 **Suite du parcours :**
-- **niveau 2 (HSM)** — la cérémonie de clés : générer et protéger la clé de la CA dans un module matériel.
+- **HSM** — la cérémonie de clés : générer et protéger la clé de la CA dans un module matériel.

@@ -1,9 +1,9 @@
-# Niveau 2 : la cérémonie de clés
+# La cérémonie de clés
 
 > 🟢 **PARCOURS DÉCOUVERTE** — lab guidé, les commandes te sont fournies.
 
-Depuis le niveau 0, une question est restée sous le tapis : **où vit la clé privée de
-ta CA ?** Jusqu'ici, dans un fichier sur le disque, protégé par un mot de passe. Pour
+Depuis le début du parcours, une question est restée sous le tapis : **où vit la clé
+privée de ta CA ?** Jusqu'ici, dans un fichier sur le disque, protégé par un mot de passe. Pour
 un lab, parfait. Pour une CA racine en production, c'est le pire des cauchemars : qui
 copie ce fichier copie ton autorité tout entière, et peut signer en ton nom pour
 toujours.
@@ -31,4 +31,4 @@ Au programme :
 > L'environnement (SoftHSM2 + OpenSC + engine OpenSSL) s'installe pendant cette intro.
 > Patiente la fin de l'installation avant de passer à l'étape 1.
 
-Durée estimée : 30 à 45 minutes. Prérequis : niveau 0 (PKI, CA, clé privée, certificat racine).
+Durée estimée : 30 à 45 minutes. Prérequis : les bases (PKI, CA, clé privée, certificat racine).

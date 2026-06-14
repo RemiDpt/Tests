@@ -1,6 +1,6 @@
-# Scénario Killercoda — step-ca niveau 1 (token court en CI/CD)
+# Scénario Killercoda — [DECOUVERTE] [Step-ca] token court en CI/CD
 
-Deuxième lab du parcours PKI. Prérequis pédagogique : niveau 0 (decouverte-step-ca).
+Lab du parcours PKI. Prérequis pédagogique : les bases (decouverte-step-ca).
 
 ## Idée
 Un job de pipeline obtient (et renouvelle) son certificat automatiquement grâce à un

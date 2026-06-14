@@ -1,6 +1,6 @@
 # Étape 1 — Créer la PKI
 
-On repart d'une PKI neuve, exactement comme au niveau 0. La nouveauté n'est pas dans
+On repart d'une PKI neuve, toute simple. La nouveauté n'est pas dans
 la création : elle est dans la **façon dont on va se servir de la provisioner** aux
 étapes suivantes.
 

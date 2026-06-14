@@ -16,6 +16,7 @@ Chaque scénario est un dossier au TOP LEVEL du repo, contenant un index.json. P
 - Migration des dossiers existants vers le préfixe `decouverte-` : à faire avec précaution (renommer un dossier change l'URL Killercoda et casse les liens déjà partagés) — à valider avant d'appliquer.
 
 ## Conventions
+- Titre de lab (champ `title` de l'index.json) au format `[DECOUVERTE]`/`[DEFI]` + `[Tech]` + intitulé, ex. `[DECOUVERTE] [Step-ca] ...`, `[DEFI] [OpenBao] ...`, `[DECOUVERTE] [HSM] ...`. PAS de numérotation « niveau 0/1/2 » (retirée des titres ET des renvois dans les textes ; renvoyer aux labs par leur techno/thème, pas par un numéro). Changer le `title` n'affecte pas l'URL Killercoda (qui dépend du nom de dossier).
 - Tout le contenu pédagogique en français ; tutoiement de l'apprenant, ton direct et engageant.
 - Mot de passe de lab trivial assumé (jamais en prod).
 - Référencer ANSSI plutôt que NIST quand pertinent.
@@ -29,8 +30,8 @@ Chaque scénario est un dossier au TOP LEVEL du repo, contenant un index.json. P
 - Toujours me montrer ce que tu vas créer/modifier avant de le faire.
 
 ## Roadmap des labs
-Faits (famille découverte) : step-ca niveau 0 (PKI de base), niveau 1 (token court CI/CD), OpenBao (certs courts).
-Ajouts découverte VALIDÉS EN LIVE (juin 2026, comblent les 2 plus gros écarts cours/défi) : decouverte-step-ca étape 4 « Émettre un certificat SSH » (init niveau 0 passé en `--ssh`, étape ancienne « Inspecter » devenue step5) ; decouverte-openbao étape 4 « policy + AppRole » (étape ancienne « Révoquer » devenue step5). Les deux testés sur VM Ubuntu vierge : SSH → `step ca init --ssh` non-interactif OK + provisioner JWK `admin` émet un user cert (Key ID + Principals = `deploy`), verify PASS ; AppRole → émission OUI / création de rôle refusée 403 / verify PASS. Bannières « À TESTER » retirées.
+Faits (famille découverte) : Step-ca (PKI de base), Step-ca token court CI/CD, OpenBao (certs courts). (Ancienne numérotation « niveau 0/1/2 » retirée — voir Conventions.)
+Ajouts découverte VALIDÉS EN LIVE (juin 2026, comblent les 2 plus gros écarts cours/défi) : decouverte-step-ca étape 4 « Émettre un certificat SSH » (init du lab Step-ca de base passé en `--ssh`, étape ancienne « Inspecter » devenue step5) ; decouverte-openbao étape 4 « policy + AppRole » (étape ancienne « Révoquer » devenue step5). Les deux testés sur VM Ubuntu vierge : SSH → `step ca init --ssh` non-interactif OK + provisioner JWK `admin` émet un user cert (Key ID + Principals = `deploy`), verify PASS ; AppRole → émission OUI / création de rôle refusée 403 / verify PASS. Bannières « À TESTER » retirées.
 decouverte-step-ca-token étape 4 « ACME : le renouvellement qui se déclenche tout seul » (provisioner ACME + acme.sh HTTP-01 standalone, /etc/hosts acme.lab.local→127.0.0.1, CURL_CA_BUNDLE=root_ca.crt ; étape ancienne « Automatiser » devenue step5) : VALIDÉ EN LIVE (juin 2026, VM vierge) — `step ca provisioner add acme` + restart OK, URL `/acme/acme/directory` OK, acme.sh standalone :80 via socat OK, confiance TLS par CURL_CA_BUNDLE sans `--insecure`, renouvellement forcé OK, verify PASS (cert dans `acme.lab.local_ecc/`). Bannière retirée.
 Niveau 2 (decouverte-hsm) : cérémonie de clés avec SoftHSM2/PKCS#11 + OpenSSL — généré, À TESTER EN LIVE (engine PKCS#11 OpenSSL 1.1 vs 3 = point fragile). N'utilise PAS step-ca (binaire standard sans PKCS#11) : voie SoftHSM2 + OpenSSL retenue.
 Faits (famille défi) : defi-step-ca (hiérarchie hors-ligne, certificat SSH, politique d'autorité qui refuse, template imposé) et defi-openbao (rôle contraint, révocation+CRL, AppRole, intermédiaire signée par racine externe). Générés, À TESTER EN LIVE (cf. points fragiles ci-dessous).

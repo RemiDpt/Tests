@@ -2,7 +2,7 @@
 
 > 🟢 **PARCOURS DÉCOUVERTE** — lab guidé, les commandes te sont fournies.
 
-Aux niveaux 0 et 1, la CA (step-ca) émettait des certificats sur demande — à la main,
+Avec step-ca, la CA émettait des certificats sur demande — à la main,
 puis automatiquement via un token court. Ici, on change de modèle : avec **OpenBao** (fork open
 source de HashiCorp Vault, hébergé par la Linux Foundation), le certificat devient un
 **secret dynamique** — généré à la volée, valable quelques minutes, jeté, regénéré.
@@ -28,4 +28,4 @@ Au programme :
 > OpenBao se pilote en ligne de commande et par API HTTP : tout se passe dans le
 > terminal dans ce lab. C'est normal et voulu.
 
-Durée estimée : 25 à 35 minutes. Prérequis : avoir compris le niveau 0 (PKI, CA, certificat).
+Durée estimée : 25 à 35 minutes. Prérequis : avoir compris les bases (PKI, CA, certificat).

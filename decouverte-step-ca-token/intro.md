@@ -1,8 +1,8 @@
-# Niveau 1 : un certificat automatique en CI/CD
+# Un certificat automatique en CI/CD
 
 > 🟢 **PARCOURS DÉCOUVERTE** — lab guidé, les commandes te sont fournies.
 
-Au niveau 0, tu as émis un certificat **à la main**, en tapant un mot de passe. Très
+Tu as déjà émis un certificat **à la main**, en tapant un mot de passe. Très
 bien pour apprendre — intenable au quotidien. Une pipeline CI/CD déploie dix fois par
 jour : personne ne va taper un mot de passe à chaque fois, et surtout, **on ne veut
 aucun secret durable stocké dans le runner**. Un secret qui traîne dans une pipeline,
@@ -19,7 +19,7 @@ Le token expire, et même volé après coup, il ne sert plus à rien.
 > le lendemain. Tu confies bien plus volontiers le ticket que la carte.
 
 Au programme :
-1. créer la PKI — exactement la même qu'au niveau 0 ; ce qui change vient ensuite, dans
+1. créer la PKI — une PKI step-ca toute simple ; ce qui change vient ensuite, dans
    la façon de lui réclamer un certificat ;
 2. démarrer la CA ;
 3. **simuler un job de pipeline** : un orchestrateur de confiance émet un token court,
@@ -31,4 +31,4 @@ Au programme :
 > L'environnement (step CLI + step-ca) s'installe pendant cette intro. Patiente la
 > fin de l'installation avant de passer à l'étape 1.
 
-Durée estimée : 25 à 40 minutes. Prérequis : avoir compris le niveau 0 (PKI, CA, certificat).
+Durée estimée : 25 à 40 minutes. Prérequis : avoir compris les bases (PKI, CA, certificat).

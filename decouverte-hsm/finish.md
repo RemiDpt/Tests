@@ -15,10 +15,10 @@ mais **comment protéger ce qui rend l'émission digne de confiance**.
 
 | Lab | Question traitée |
 |-----|------------------|
-| niveau 0 (step-ca) | comment émettre un certificat ? |
-| niveau 1 (token court) | comment automatiser sans secret durable ? |
+| Step-ca (bases) | comment émettre un certificat ? |
+| Step-ca (token court) | comment automatiser sans secret durable ? |
 | OpenBao | comment rendre les certificats courts et dynamiques ? |
-| niveau 2 (HSM) | comment protéger la clé qui fait foi ? |
+| HSM | comment protéger la clé qui fait foi ? |
 
 **Pour aller plus loin :**
 - rejouer la cérémonie avec une clé **ECDSA** plutôt que RSA ;

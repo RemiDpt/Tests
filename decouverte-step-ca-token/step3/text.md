@@ -50,7 +50,7 @@ Regarde ce que tu as obtenu :
 step certificate inspect cert.pem --short
 ```{{exec}}
 
-C'est toute la différence avec le niveau 0. Là-bas, `--provisioner-password-file`
+C'est toute la différence avec l'émission manuelle. Là-bas, `--provisioner-password-file`
 accompagnait chaque émission : le secret vivait avec le demandeur. Ici, le job ne
 porte qu'un **token jetable**. Compromis demain, il aura déjà expiré.
 

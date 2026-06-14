@@ -1,5 +1,5 @@
 {
-  "title": "Défi OpenBao — Contraindre, scoper, révoquer, chaîner",
+  "title": "[DEFI] [OpenBao] Contraindre, scoper, révoquer, chaîner",
   "description": "Quatre défis OpenBao à résoudre seul : rôle PKI contraint qui refuse, révocation + CRL, authentification AppRole pour un runner CI, et intermédiaire signée par une racine externe. Aucune commande fournie pour le cœur du défi. Indice et solution de référence repliables.",
   "details": {
     "intro": {

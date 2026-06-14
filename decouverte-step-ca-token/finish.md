@@ -11,7 +11,8 @@ Ce que tu as construit :
 - le réflexe de **rejouer le cycle** à chaque exécution : le renouvellement, sans personne.
 
 Tu es passé de « j'émets un certificat à la main » à « une charge prouve son identité
-et obtient son certificat toute seule ». C'est le saut conceptuel du niveau 0 au niveau 1.
+et obtient son certificat toute seule ». C'est le saut conceptuel entre émettre à la
+main et émettre sans personne.
 
 > Tu as manipulé les deux modèles : **ACME** (HTTP-01), où la CA recontacte le demandeur
 > pour vérifier qu'il contrôle bien le nom — parfait pour un service durable qui se

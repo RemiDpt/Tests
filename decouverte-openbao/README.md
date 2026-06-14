@@ -1,6 +1,6 @@
 # Scénario Killercoda — OpenBao (certificats courts/dynamiques)
 
-Troisième lab du parcours PKI. Prérequis pédagogique : niveau 0 (decouverte-step-ca).
+Lab du parcours PKI. Prérequis pédagogique : les bases (decouverte-step-ca).
 
 ## Idée
 Le certificat devient un **secret dynamique** : généré à la demande par le moteur

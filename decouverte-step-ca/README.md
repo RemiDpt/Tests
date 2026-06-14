@@ -1,4 +1,4 @@
-# Scénario Killercoda — PKI niveau 0 (step-ca)
+# Scénario Killercoda — [DECOUVERTE] [Step-ca] première autorité
 
 Premier lab d'un parcours de formation PKI pratique et gratuit.
 

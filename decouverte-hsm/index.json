@@ -1,5 +1,5 @@
 {
-  "title": "PKI niveau 2 — Cérémonie de clés avec un HSM (SoftHSM2/PKCS#11)",
+  "title": "[DECOUVERTE] [HSM] Cérémonie de clés (SoftHSM2/PKCS#11)",
   "description": "Mettre en scène une cérémonie de clés : générer la clé privée d'une CA racine DANS un module matériel (simulé par SoftHSM2), prouver qu'elle n'en sort jamais, et signer le certificat racine sans jamais exposer la clé. Le cran de protection des clés de CA.",
   "details": {
     "intro": {
