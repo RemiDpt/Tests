@@ -1,5 +1,5 @@
 {
-  "title": "[DECOUVERTE] [Step-ca] Certificat automatique en CI/CD (token court)",
+  "title": "[DECOUVERTE] ★★ [Step-ca] Certificat automatique en CI/CD (token court)",
   "description": "Émettre et renouveler un certificat automatiquement depuis un job de pipeline, sans intervention humaine ni secret long-terme. Le modèle de l'identité de charge de travail : un token éphémère, jamais un mot de passe stocké.",
   "details": {
     "intro": {

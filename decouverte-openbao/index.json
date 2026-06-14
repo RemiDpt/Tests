@@ -1,5 +1,5 @@
 {
-  "title": "[DECOUVERTE] [OpenBao] Certificats dynamiques à durée de vie courte",
+  "title": "[DECOUVERTE] ★★★ [OpenBao] Certificats dynamiques à durée de vie courte",
   "description": "Monter une PKI dans OpenBao (fork open source de Vault) et émettre des certificats de quelques minutes, générés à la demande : le certificat devient un secret dynamique. L'angle crypto-agilité du parcours.",
   "details": {
     "intro": {
