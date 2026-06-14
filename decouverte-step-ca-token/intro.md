@@ -6,7 +6,8 @@ jour : personne ne va taper un mot de passe à chaque fois, et surtout, **on ne 
 aucun secret durable stocké dans le runner**. Un secret qui traîne dans une pipeline,
 c'est un secret qui fuit un jour.
 
-La bonne réponse tient en deux mots : **identité de charge de travail**. Plutôt que de
+La bonne réponse porte un nom : l'**identité de charge de travail** (*workload identity*,
+le terme que tu croiseras chez les fournisseurs cloud). Plutôt que de
 donner au job un mot de passe permanent, on lui remet un **token éphémère** — un
 laissez-passer valable quelques minutes, juste le temps de réclamer son certificat.
 Le token expire, et même volé après coup, il ne sert plus à rien.
@@ -16,7 +17,8 @@ Le token expire, et même volé après coup, il ne sert plus à rien.
 > le lendemain. Tu confies bien plus volontiers le ticket que la carte.
 
 Au programme :
-1. créer la PKI (comme au niveau 0, mais on va se servir autrement de la provisioner) ;
+1. créer la PKI — exactement la même qu'au niveau 0 ; ce qui change vient ensuite, dans
+   la façon de lui réclamer un certificat ;
 2. démarrer la CA ;
 3. **simuler un job de pipeline** : un orchestrateur de confiance émet un token court,
    le job s'en sert — et lui seul — pour obtenir son certificat ;
