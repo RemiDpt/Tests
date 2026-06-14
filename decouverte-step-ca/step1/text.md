@@ -12,6 +12,7 @@ qu'on scripte en vrai) :
 ```
 step ca init --deployment-type standalone --name "Demo Lab Root CA" \
   --dns localhost --address ":4443" --provisioner admin \
+  --ssh \
   --password-file /root/.step-password
 ```{{exec}}
 
@@ -20,6 +21,8 @@ Ce que fait chaque option :
 - `--name` : le nom de ta CA, repris dans le sujet du certificat racine ;
 - `--dns localhost` / `--address ":4443"` : où la CA écoutera ;
 - `--provisioner admin` : crée la provisioner qui autorisera les émissions ;
+- `--ssh` : active **aussi** une autorité SSH (en plus de la X.509) — on s'en
+  servira à l'étape 4 ;
 - `--password-file` : le mot de passe qui protège les clés privées générées
   (ici le fichier de lab créé à l'installation — trivial, jamais en prod).
 
