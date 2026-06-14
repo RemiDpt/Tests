@@ -12,8 +12,9 @@ step certificate inspect /root/test.crt
 Points à repérer dans la sortie :
 - **Subject / SAN** : `test.lab.local` — l'identité portée par le certificat.
 - **Issuer** : l'intermédiaire, pas la racine.
-- **Validity** : la fenêtre de validité (par défaut 24 h avec step-ca).
-- **Public Key Algorithm** : la courbe utilisée (ECDSA P-256 par défaut).
+- **Validity** : la période de validité (par défaut 24 h avec step-ca).
+- **Public Key Algorithm** : l'algorithme de la clé (ECDSA P-256 par défaut, mais ça
+  pourrait tout aussi bien être du RSA — ce n'est pas forcément une courbe elliptique).
 
 Vérifier la chaîne complète contre la racine :
 

@@ -36,11 +36,25 @@ step path
 ls -R $(step path)
 ```{{exec}}
 
-Deux fichiers sont à retenir : `certs/root_ca.crt` (l'ancre de confiance) et
-`certs/intermediate_ca.crt` (le maillon qui signera les certificats émis).
-La racine ne signe que l'intermédiaire — jamais directement un certificat feuille.
-C'est la règle dans toutes les PKI d'entreprise : la racine signe une poignée
-d'intermédiaires puis retourne au coffre, et ce sont les intermédiaires qui émettent au
-quotidien les milliers de certificats de la flotte.
+Deux fichiers sont à retenir : `certs/root_ca.crt` (le **certificat racine**, celui en
+qui tout le monde fait confiance) et `certs/intermediate_ca.crt` (le maillon qui signera
+les certificats émis). La racine ne signe que l'intermédiaire — jamais directement un
+certificat feuille. C'est la règle dans toutes les PKI d'entreprise : la racine signe
+une poignée d'intermédiaires puis retourne au coffre, et ce sont les intermédiaires qui
+émettent au quotidien les milliers de certificats des serveurs et des services.
+
+Voici l'architecture que tu viens de générer, en une image :
+
+```text
+   Racine  (root_ca.crt)                    hors-ligne, signe très rarement
+      │
+      │  signe
+      ▼
+   Intermédiaire  (intermediate_ca.crt)     en ligne, signe au quotidien
+      │
+      │  signe
+      ▼
+   Certificat feuille  (test.lab.local)     ton serveur, ton service, ton job CI
+```
 
 Cliquer sur **Check** une fois la PKI générée.

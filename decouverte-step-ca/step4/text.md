@@ -18,6 +18,12 @@ step ssh certificate deploy id_deploy \
   --root $(step path)/certs/root_ca.crt
 ```{{exec}}
 
+> 💡 **C'est normal :** tu verras sans doute une ligne d'erreur mentionnant le
+> `ssh-agent` (du genre `Error connecting to agent` ou `could not add key to the
+> ssh-agent`). Aucun agent SSH ne tourne dans ce lab, d'où le message. Le certificat,
+> lui, est **bien généré** — cette erreur ne concerne que l'ajout automatique de la clé
+> à l'agent, une commodité facultative dont on n'a pas besoin ici.
+
 Deux fichiers apparaissent : `id_deploy` (la clé privée) et `id_deploy-cert.pub` (le
 **certificat** SSH, déjà signé par la CA). Le `-cert.pub` est ce que le serveur vérifie.
 
@@ -31,7 +37,7 @@ Points à repérer dans la sortie :
 - **Type** : `... user certificate` — c'est un certificat **utilisateur**, pas hôte ;
 - **Principals** : `deploy` — l'équivalent SSH du nom d'utilisateur autorisé. Le serveur
   n'accepte la connexion que si le principal correspond ;
-- **Valid** : la fenêtre de validité, courte par défaut — même logique que pour le X.509.
+- **Valid** : la période de validité, courte par défaut — même logique que pour le X.509.
 
 > `--no-password --insecure` génère une clé privée **non chiffrée** (pratique en lab et
 > en CI). Ces deux options vont ensemble ; à l'inverse, `--password-file` chiffrerait la

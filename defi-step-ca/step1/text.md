@@ -65,9 +65,9 @@ de feuilles en bout de chaîne.
 `--ca` et `--ca-key`, c'est juste « avec quelle autorité je signe ce certificat ». La
 racine signe l'intermédiaire, l'intermédiaire signe la feuille. À la vérification,
 `-untrusted` tend à OpenSSL le maillon du milieu pour qu'il rebâtisse le chemin
-feuille → intermédiaire → racine ; la seule vraie ancre de confiance, c'est la racine
-passée à `-CAfile`. Ton navigateur fait exactement ce raisonnement à chaque connexion
-HTTPS.
+feuille → intermédiaire → racine ; le seul certificat en qui on fait confiance d'emblée,
+c'est la racine passée à `-CAfile`. Ton navigateur fait exactement ce raisonnement à
+chaque connexion HTTPS.
 
 **Le piège à éviter**
 
