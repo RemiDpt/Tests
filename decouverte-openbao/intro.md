@@ -16,7 +16,9 @@ Au programme :
 1. démarrer OpenBao et t'authentifier ;
 2. monter le moteur **PKI** et créer une CA interne ;
 3. émettre un certificat valable **2 minutes** ;
-4. révoquer par numéro de série, lire la CRL — et comprendre pourquoi tu en auras rarement besoin.
+4. donner à un runner CI une **identité réduite** (policy + AppRole) qui ne sait
+   qu'émettre, et rien d'autre ;
+5. révoquer par numéro de série, lire la CRL — et comprendre pourquoi tu en auras rarement besoin.
 
 > L'environnement (OpenBao + jq) s'installe pendant cette intro. Patiente la fin de
 > l'installation avant de passer à l'étape 1.

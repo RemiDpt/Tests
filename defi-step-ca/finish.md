@@ -8,7 +8,9 @@ Tu as résolu, sans commandes toutes faites :
 4. un **template** qui **impose** le contenu d'un certificat, demandeur ou pas.
 
 Ce sont exactement les leviers d'une PKI maîtrisée : *qui* peut demander, *quoi*
-peut être émis, et *comment* on protège l'autorité. La différence avec les labs
+peut être émis, et *comment* on protège l'autorité. Dans une vraie boîte, ces trois
+leviers font la différence entre une PKI qu'on présente sereinement à un auditeur et
+une autre qu'on espère qu'il ne regardera pas de trop près. La différence avec les labs
 découverte n'est pas l'outil — c'est que tu n'avais plus de carte.
 
 **Pour aller plus loin :**

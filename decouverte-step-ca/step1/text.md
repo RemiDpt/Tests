@@ -39,5 +39,8 @@ ls -R $(step path)
 Deux fichiers sont à retenir : `certs/root_ca.crt` (l'ancre de confiance) et
 `certs/intermediate_ca.crt` (le maillon qui signera les certificats émis).
 La racine ne signe que l'intermédiaire — jamais directement un certificat feuille.
+C'est la règle dans toutes les PKI d'entreprise : la racine signe une poignée
+d'intermédiaires puis retourne au coffre, et ce sont les intermédiaires qui émettent au
+quotidien les milliers de certificats de la flotte.
 
 Cliquer sur **Check** une fois la PKI générée.

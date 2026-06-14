@@ -5,6 +5,8 @@ Ce que tu as construit :
 - une CA interne dont la clé privée ne sort jamais d'OpenBao ;
 - un **rôle** qui borne la politique d'émission (noms, durées) ;
 - des certificats **dynamiques de 2 minutes**, générés à la demande ;
+- une **identité de machine** (policy + AppRole) pour un runner CI, capable d'émettre
+  mais incapable de toucher au reste du coffre ;
 - une **révocation par numéro de série** et sa CRL — en sachant pourquoi les durées
   courtes la rendent rarement nécessaire.
 

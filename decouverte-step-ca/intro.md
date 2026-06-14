@@ -15,7 +15,9 @@ plus lourdes ou des gestionnaires de secrets comme OpenBao.
 À la fin de ce lab :
 - une hiérarchie à deux niveaux (root + intermediate) générée par tes soins ;
 - un serveur de CA en ligne qui répond aux requêtes ;
-- un premier certificat émis et vérifié contre ta propre racine.
+- un premier certificat émis et vérifié contre ta propre racine ;
+- un certificat **SSH** utilisateur émis par la même CA — la preuve qu'une PKI ne se
+  limite pas au HTTPS.
 
 > L'environnement (step CLI + step-ca) s'installe pendant cette intro. Patiente la
 > fin de l'installation avant de passer à l'étape 1.
