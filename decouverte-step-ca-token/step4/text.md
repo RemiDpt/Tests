@@ -30,12 +30,21 @@ curl -s https://get.acme.sh | sh -s email=admin@lab.local >/dev/null
 echo "acme.sh installé."
 ```{{exec}}
 
-Demander le certificat en mode **standalone** (acme.sh ouvre lui-même le port 80 le temps
-du défi). On indique la racine de la CA pour qu'acme.sh fasse confiance à son endpoint
-HTTPS :
+Pour qu'acme.sh fasse confiance à l'endpoint HTTPS de ta CA, on installe sa **racine dans
+le magasin de confiance du système**. Le détail qui compte : le renouvellement
+automatique tournera via `cron`, dans un environnement vierge où aucune variable de ton
+shell n'existe — il faut donc une confiance **permanente**, pas une astuce de session.
+C'est exactement le geste qu'on fait en entreprise pour une CA interne :
 
 ```
-export CURL_CA_BUNDLE=$(step path)/certs/root_ca.crt
+cp $(step path)/certs/root_ca.crt /usr/local/share/ca-certificates/lab-root-ca.crt
+update-ca-certificates
+```{{exec}}
+
+Demander le certificat en mode **standalone** (acme.sh ouvre lui-même le port 80 le temps
+du défi) :
+
+```
 ~/.acme.sh/acme.sh --issue --standalone -d acme.lab.local \
   --server https://localhost:4443/acme/acme/directory
 ```{{exec}}
@@ -46,8 +55,10 @@ bien ce nom (le **défi HTTP-01**), puis elle a signé. Aucun token, aucun secre
 circulé.
 
 Et le renouvellement « tout seul » ? À l'installation, acme.sh a posé une tâche **cron**
-qui vérifie chaque jour l'échéance et renouvelle quand il le faut. Regarde-la, puis force
-un renouvellement pour voir le cycle complet :
+qui vérifie chaque jour l'échéance et renouvelle quand il le faut. Et comme ta CA est
+maintenant de confiance au niveau système, ce cron fonctionne dans son environnement
+vierge — sans aucune variable à lui transmettre. Regarde la tâche, puis force un
+renouvellement pour voir le cycle complet :
 
 ```
 crontab -l | grep acme.sh
