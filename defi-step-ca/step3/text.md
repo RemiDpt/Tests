@@ -1,11 +1,5 @@
 # Défi 3 — Une politique qui refuse pour de vrai
 
-> ⚠️ **ÉTAPE EN CHANTIER — non validée en live.** Ce défi a d'abord été écrit avec une
-> politique au niveau *provisioner*, qui sur un step-ca **auto-hébergé est silencieusement
-> ignorée** (les policies par provisioner sont une fonctionnalité hébergée). Corrigé pour
-> une politique au niveau **`authority`**, qui elle est appliquée à la signature. À
-> reproduire en live (refus effectif d'`app.evil.com`) avant publication.
-
 Une PKI sérieuse ne se contente pas d'émettre : elle **refuse** ce qui sort de son
 périmètre. Sur step-ca auto-hébergé, ce verrou se pose au niveau de l'**autorité**
 (`authority.policy`) : une liste de noms DNS autorisés, vérifiée **à la signature**.
