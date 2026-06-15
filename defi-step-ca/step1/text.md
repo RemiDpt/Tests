@@ -3,7 +3,7 @@
 Pas besoin du serveur CA ici : l'outil `step certificate` sait créer et signer des
 certificats directement, sur le disque. Idéal pour bien voir la mécanique d'une chaîne.
 
-## 🎯 Objectif
+## 🚩 Objectif
 Construire une **chaîne à trois niveaux** (les trois certificats dans un **même
 dossier** ; le vérificateur les cherche dans ton dossier courant, `/root` ou `/tmp`) :
 
@@ -13,7 +13,7 @@ dossier** ; le vérificateur les cherche dans ton dossier courant, `/root` ou `/
 | `intermediate.crt` / `intermediate.key` | intermédiaire | **CA**, signée par la racine |
 | `endentity.crt` / `endentity.key` | entité finale (feuille) | **pas** une CA, pour `www.lab.local` |
 
-## ✅ Critère de réussite
+## 🔎 Critère de réussite
 - `openssl verify -CAfile root.crt -untrusted intermediate.crt endentity.crt` réussit ;
 - `intermediate.crt` porte `CA:TRUE`, `endentity.crt` non ;
 - `endentity.crt` concerne bien `www.lab.local`.
@@ -23,7 +23,7 @@ Quand tes trois fichiers sont là, clique sur **Check**.
 ---
 
 <details>
-<summary>🆘 Indice</summary>
+<summary>🧩 Indice</summary>
 
 `step certificate create` accepte un **profil** : `--profile root-ca`,
 `--profile intermediate-ca`, `--profile leaf`. Pour signer un certificat par un
@@ -32,7 +32,7 @@ passphrase sur les clés : `--no-password --insecure`.
 </details>
 
 <details>
-<summary>✅ Solution de référence</summary>
+<summary>🗝️ Solution de référence</summary>
 
 ```
 step certificate create "Defi Root" root.crt root.key \

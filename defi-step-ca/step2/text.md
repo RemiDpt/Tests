@@ -11,11 +11,11 @@ pgrep -f "step-ca .*ca.json" >/dev/null || nohup step-ca "$(step path)/config/ca
 sleep 2 && curl -sk https://localhost:4443/health
 ```{{exec}}
 
-## 🎯 Objectif
+## 🚩 Objectif
 Émettre un **certificat SSH _utilisateur_** pour le principal `deploy`, valide **au
 plus 1 heure**, et déposer le certificat résultant dans `/root/id_deploy-cert.pub`.
 
-## ✅ Critère de réussite
+## 🔎 Critère de réussite
 - `/root/id_deploy-cert.pub` est un certificat SSH **de type _user_** ;
 - il liste le principal **`deploy`** ;
 - `ssh-keygen -L -f /root/id_deploy-cert.pub` l'affiche sans erreur.
@@ -25,7 +25,7 @@ Clique sur **Check** une fois le certificat émis.
 ---
 
 <details>
-<summary>🆘 Indice</summary>
+<summary>🧩 Indice</summary>
 
 La sous-commande dédiée est `step ssh certificate <principal> <fichier_clé>`. Elle
 **génère la paire de clés** et écrit le certificat à côté, suffixé `-cert.pub`. Deux
@@ -39,7 +39,7 @@ racine de la CA, et borne la durée avec `--not-after`.
 </details>
 
 <details>
-<summary>✅ Solution de référence</summary>
+<summary>🗝️ Solution de référence</summary>
 
 ```
 step ssh certificate deploy /root/id_deploy \

@@ -14,7 +14,7 @@ Quatre défis :
 4. **Intermédiaire** OpenBao signée par une **racine externe** (OpenSSL).
 
 **Règles du jeu :**
-- **🆘 Indice** et **✅ Solution de référence** repliables en fin d'étape — à n'ouvrir
+- **🧩 Indice** et **🗝️ Solution de référence** repliables en fin d'étape — à n'ouvrir
   qu'en dernier recours.
 - Le `verify.sh` contrôle le **résultat réel** : il émet, révoque ou tente une action
   interdite lui-même, et juge sur le comportement effectif d'OpenBao.

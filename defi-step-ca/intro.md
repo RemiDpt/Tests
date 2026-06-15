@@ -15,7 +15,7 @@ Quatre défis, indépendants ou presque, de difficulté croissante :
 4. **Template** qui impose un contenu au certificat, sans que le demandeur le choisisse.
 
 **Règles du jeu :**
-- Chaque étape a un **🆘 Indice** et une **✅ Solution de référence** repliables, à
+- Chaque étape a un **🧩 Indice** et une **🗝️ Solution de référence** repliables, à
   n'ouvrir qu'en cas de blocage — l'intérêt du défi est de chercher d'abord.
 - Le `verify.sh` ne contrôle pas que tu as tapé une commande : il vérifie le
   **résultat réel** (le bon certificat existe, la mauvaise demande est bien rejetée).

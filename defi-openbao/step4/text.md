@@ -13,14 +13,14 @@ export BAO_TOKEN=root
 bao status >/dev/null 2>&1 && echo "OpenBao OK" || echo "Relance le bloc fourni du Défi 1."
 ```{{exec}}
 
-## 🎯 Objectif
+## 🚩 Objectif
 1. Créer une **racine externe** (OpenSSL) dans `/root/ext_root.crt` (+ sa clé).
 2. Monter un moteur PKI **intermédiaire** sur le chemin **`pki_int`**, lui faire
    générer une **CSR**, la **signer** avec la racine externe, puis **réimporter** le
    certificat signé (`set-signed`).
 3. Créer un rôle **`endentity`** sur `pki_int` (domaine `lab.local`) capable d'émettre.
 
-## ✅ Critère de réussite
+## 🔎 Critère de réussite
 Le `verify.sh` vérifie que :
 - le certificat de CA de `pki_int` est **signé par** `/root/ext_root.crt` ;
 - un certificat émis par `pki_int/issue/endentity` **se vérifie** jusqu'à la racine externe.
@@ -30,7 +30,7 @@ Clique sur **Check** quand la chaîne est complète.
 ---
 
 <details>
-<summary>🆘 Indice</summary>
+<summary>🧩 Indice</summary>
 
 Côté OpenBao : `bao secrets enable -path=pki_int pki`, puis
 `pki_int/intermediate/generate/internal` renvoie une CSR (`-field=csr`). Après
@@ -41,7 +41,7 @@ ext_root.key` en ajoutant `basicConstraints=critical,CA:TRUE`.
 </details>
 
 <details>
-<summary>✅ Solution de référence</summary>
+<summary>🗝️ Solution de référence</summary>
 
 ```
 # 1) Racine externe (hors OpenBao)

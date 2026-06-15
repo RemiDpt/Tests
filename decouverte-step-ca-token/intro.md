@@ -14,7 +14,7 @@ donner au job un mot de passe permanent, on lui remet un **token éphémère** �
 laissez-passer valable quelques minutes, juste le temps de réclamer son certificat.
 Le token expire, et même volé après coup, il ne sert plus à rien.
 
-> 💡 L'analogie : un mot de passe de provisioner, c'est ta carte bancaire. Un token
+> 🗒️ L'analogie : un mot de passe de provisioner, c'est ta carte bancaire. Un token
 > court, c'est un ticket de parking — valable une fois, quelques minutes, sans valeur
 > le lendemain. Tu confies bien plus volontiers le ticket que la carte.
 

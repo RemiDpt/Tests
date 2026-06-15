@@ -13,13 +13,13 @@ export BAO_TOKEN=root
 bao status >/dev/null 2>&1 && echo "OpenBao OK" || echo "Relance le bloc fourni du Défi 1."
 ```{{exec}}
 
-## 🎯 Objectif
+## 🚩 Objectif
 1. Mettre en place l'auth **AppRole** et une policy qui autorise **uniquement**
    l'émission via `pki/issue/prod`.
 2. Créer un rôle AppRole, récupérer ses identifiants, **te connecter** pour obtenir un
    token, et l'écrire dans **`/root/ci_token.txt`**.
 
-## ✅ Critère de réussite
+## 🔎 Critère de réussite
 Le `verify.sh` utilise **ton** token (pas root) et vérifie :
 - qu'il **peut** émettre via `pki/issue/prod` ;
 - qu'il **ne peut pas** créer un nouveau rôle (`pki/roles/…`) ni agir hors de sa policy.
@@ -29,7 +29,7 @@ Clique sur **Check** quand le token est en place.
 ---
 
 <details>
-<summary>🆘 Indice</summary>
+<summary>🧩 Indice</summary>
 
 Active la méthode : `bao auth enable approle`. Une policy est un fichier HCL avec des
 blocs `path "…" { capabilities = [...] }` — ici un seul chemin, `pki/issue/prod`, en
@@ -39,7 +39,7 @@ token_policies=<policy>`. Tu récupères ensuite `role-id` et `secret-id`, puis 
 </details>
 
 <details>
-<summary>✅ Solution de référence</summary>
+<summary>🗝️ Solution de référence</summary>
 
 ```
 bao auth enable approle

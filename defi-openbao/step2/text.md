@@ -12,12 +12,12 @@ export BAO_TOKEN=root
 bao status >/dev/null 2>&1 && echo "OpenBao OK" || echo "Relance le bloc fourni du Défi 1."
 ```{{exec}}
 
-## 🎯 Objectif
+## 🚩 Objectif
 1. Émettre un certificat via le rôle `prod` (créé au Défi 1).
 2. Le **révoquer** par son numéro de série.
 3. Écrire ce numéro de série dans **`/root/revoked_serial.txt`**.
 
-## ✅ Critère de réussite
+## 🔎 Critère de réussite
 Le `verify.sh` télécharge la CRL de la CA et vérifie qu'elle contient bien une entrée
 révoquée correspondant au numéro de série de `/root/revoked_serial.txt`.
 
@@ -26,7 +26,7 @@ Clique sur **Check** une fois la révocation faite.
 ---
 
 <details>
-<summary>🆘 Indice</summary>
+<summary>🧩 Indice</summary>
 
 Le numéro de série est renvoyé à l'émission (`.data.serial_number` en JSON). La
 révocation se fait avec `bao write pki/revoke serial_number=…`. La CRL au format PEM
@@ -35,7 +35,7 @@ se récupère sur l'API : `GET $BAO_ADDR/v1/pki/crl/pem`, et se lit avec
 </details>
 
 <details>
-<summary>✅ Solution de référence</summary>
+<summary>🗝️ Solution de référence</summary>
 
 ```
 bao write -format=json pki/issue/prod common_name=revoke-me.lab.local ttl=30m > /root/r.json

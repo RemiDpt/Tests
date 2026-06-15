@@ -18,7 +18,7 @@ step ssh certificate deploy id_deploy \
   --root $(step path)/certs/root_ca.crt
 ```{{exec}}
 
-> 💡 **C'est normal :** tu verras sans doute une ligne d'erreur mentionnant le
+> 🗒️ **C'est normal :** tu verras sans doute une ligne d'erreur mentionnant le
 > `ssh-agent` (du genre `Error connecting to agent` ou `could not add key to the
 > ssh-agent`). Aucun agent SSH ne tourne dans ce lab, d'où le message. Le certificat,
 > lui, est **bien généré** — cette erreur ne concerne que l'ajout automatique de la clé

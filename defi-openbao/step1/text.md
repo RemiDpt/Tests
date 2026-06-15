@@ -16,12 +16,12 @@ bao read pki/cert/ca >/dev/null 2>&1 || bao write -field=certificate pki/root/ge
 echo "PKI prête."
 ```{{exec}}
 
-## 🎯 Objectif
+## 🚩 Objectif
 Créer un rôle PKI nommé **`prod`** qui :
 - n'autorise que le domaine **`lab.local`** (et ses sous-domaines) ;
 - plafonne la durée de vie à **1 heure maximum**.
 
-## ✅ Critère de réussite
+## 🔎 Critère de réussite
 Le `verify.sh` teste le comportement réel du rôle :
 - `app.lab.local` **s'émet** ;
 - `app.evil.com` est **refusé** ;
@@ -32,14 +32,14 @@ Clique sur **Check** quand le rôle `prod` est en place.
 ---
 
 <details>
-<summary>🆘 Indice</summary>
+<summary>🧩 Indice</summary>
 
 Un rôle se crée avec `bao write pki/roles/<nom> …`. Les paramètres qui t'intéressent :
 `allowed_domains`, `allow_subdomains`, `max_ttl` (et `ttl` pour la valeur par défaut).
 </details>
 
 <details>
-<summary>✅ Solution de référence</summary>
+<summary>🗝️ Solution de référence</summary>
 
 ```
 bao write pki/roles/prod \

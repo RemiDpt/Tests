@@ -12,12 +12,12 @@ pgrep -f "step-ca .*ca.json" >/dev/null || nohup step-ca "$(step path)/config/ca
 sleep 2 && curl -sk https://localhost:4443/health
 ```{{exec}}
 
-## 🎯 Objectif
+## 🚩 Objectif
 1. Contraindre l'**autorité** pour qu'elle n'émette **que** des certificats dont les
    noms DNS sont en `*.lab.local`.
 2. Émettre un certificat conforme pour `app.lab.local` dans **`good.crt`**.
 
-## ✅ Critère de réussite
+## 🔎 Critère de réussite
 - `good.crt` existe (dossier courant, `/root` ou `/tmp`) et vise `app.lab.local` ;
 - la politique **bloque réellement** : le `verify.sh` tentera lui-même d'émettre un
   certificat pour `app.evil.com` — il **doit échouer**. Si la CA l'accepte, le défi
@@ -28,7 +28,7 @@ Clique sur **Check** quand ta politique est en place et `good.crt` émis.
 ---
 
 <details>
-<summary>🆘 Indice</summary>
+<summary>🧩 Indice</summary>
 
 La politique vit dans `ca.json` (`$(step path)/config/ca.json`), au niveau de
 l'**autorité** (objet `authority`), sous une clé `policy` : `policy.x509.allow.dns`
@@ -38,7 +38,7 @@ ignorée en self-hosted — c'est bien `authority.policy` qu'il faut. Après mod
 </details>
 
 <details>
-<summary>✅ Solution de référence</summary>
+<summary>🗝️ Solution de référence</summary>
 
 ```
 CONFIG="$(step path)/config/ca.json"

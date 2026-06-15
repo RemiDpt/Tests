@@ -13,7 +13,7 @@ Un boîtier où la clé est **générée à l'intérieur** et **ne sort jamais**
 l'administrateur ne peut pas la lire. On ne manipule que des *références* à la clé ; le
 HSM signe pour toi, sans jamais te montrer le secret.
 
-> 💡 L'analogie : un HSM, c'est un coffre-fort qui signe les documents pour toi par une
+> 🗒️ L'analogie : un HSM, c'est un coffre-fort qui signe les documents pour toi par une
 > fente. Tu glisses le document, il ressort signé. Mais tu ne tiens jamais le tampon
 > dans ta main — il reste enfermé.
 

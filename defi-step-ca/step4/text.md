@@ -12,12 +12,12 @@ pgrep -f "step-ca .*ca.json" >/dev/null || nohup step-ca "$(step path)/config/ca
 sleep 2 && curl -sk https://localhost:4443/health
 ```{{exec}}
 
-## 🎯 Objectif
+## 🚩 Objectif
 Configurer la provisioner `admin` avec un **template X.509** qui force, sur **tout**
 certificat émis, l'**unité organisationnelle** `OU = PKI-Defi` — même si le demandeur
 ne la réclame pas.
 
-## ✅ Critère de réussite
+## 🔎 Critère de réussite
 Le `verify.sh` émet lui-même un certificat de test via `admin`, **sans** préciser
 d'OU, puis vérifie que le sujet contient bien `PKI-Defi`. Si le template n'impose pas
 l'OU, le défi échoue.
@@ -27,7 +27,7 @@ Clique sur **Check** quand le template est en place.
 ---
 
 <details>
-<summary>🆘 Indice</summary>
+<summary>🧩 Indice</summary>
 
 Une provisioner peut pointer vers un fichier de template via
 `options.x509.templateFile` dans `ca.json`. Le template est un gabarit (style Go) qui
@@ -37,7 +37,7 @@ réinjecter le sujet et les SANs demandés (`{{ toJson .Subject.CommonName }}`,
 </details>
 
 <details>
-<summary>✅ Solution de référence</summary>
+<summary>🗝️ Solution de référence</summary>
 
 Créer le template :
 
