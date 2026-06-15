@@ -11,12 +11,12 @@ dossier** ; le vérificateur les cherche dans ton dossier courant, `/root` ou `/
 |---|---|---|
 | `root.crt` / `root.key` | racine auto-signée | doit être une **CA** |
 | `intermediate.crt` / `intermediate.key` | intermédiaire | **CA**, signée par la racine |
-| `leaf.crt` / `leaf.key` | feuille | **pas** une CA, pour `www.lab.local` |
+| `endentity.crt` / `endentity.key` | entité finale (feuille) | **pas** une CA, pour `www.lab.local` |
 
 ## ✅ Critère de réussite
-- `openssl verify -CAfile root.crt -untrusted intermediate.crt leaf.crt` réussit ;
-- `intermediate.crt` porte `CA:TRUE`, `leaf.crt` non ;
-- `leaf.crt` concerne bien `www.lab.local`.
+- `openssl verify -CAfile root.crt -untrusted intermediate.crt endentity.crt` réussit ;
+- `intermediate.crt` porte `CA:TRUE`, `endentity.crt` non ;
+- `endentity.crt` concerne bien `www.lab.local`.
 
 Quand tes trois fichiers sont là, clique sur **Check**.
 
@@ -42,11 +42,11 @@ step certificate create "Defi Intermediate" intermediate.crt intermediate.key \
   --profile intermediate-ca --ca root.crt --ca-key root.key \
   --no-password --insecure
 
-step certificate create www.lab.local leaf.crt leaf.key \
+step certificate create www.lab.local endentity.crt endentity.key \
   --profile leaf --ca intermediate.crt --ca-key intermediate.key \
   --no-password --insecure
 
-openssl verify -CAfile root.crt -untrusted intermediate.crt leaf.crt
+openssl verify -CAfile root.crt -untrusted intermediate.crt endentity.crt
 ```
 
 **Pourquoi on monte la chaîne à la main**
@@ -55,7 +55,9 @@ Tout se joue dans le `--profile`. Plutôt que d'aller écrire à la main des ext
 X.509 obscures, tu choisis un rôle et `step` pose les bonnes contraintes pour toi :
 `root-ca` sort un certificat auto-signé marqué `CA:TRUE`, `intermediate-ca` reste une
 CA mais signée par un parent, et `leaf` n'est surtout pas une CA — elle reçoit les
-usages d'un certificat serveur classique. C'est la hiérarchie qu'on retrouve dans
+usages d'un certificat serveur classique. (`leaf` est le mot-clé interne de step-ca pour
+l'**entité finale** ; c'est pour ça que le profil garde ce nom même si on appelle le
+fichier produit `endentity.crt`.) C'est la hiérarchie qu'on retrouve dans
 n'importe quelle boîte : une racine maison, puis une intermédiaire **par usage** — une
 pour les serveurs web, une pour le VPN, une pour la signature de code — et des milliers
 de feuilles en bout de chaîne.

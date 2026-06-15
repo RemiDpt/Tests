@@ -18,12 +18,12 @@ bao status >/dev/null 2>&1 && echo "OpenBao OK" || echo "Relance le bloc fourni 
 2. Monter un moteur PKI **intermédiaire** sur le chemin **`pki_int`**, lui faire
    générer une **CSR**, la **signer** avec la racine externe, puis **réimporter** le
    certificat signé (`set-signed`).
-3. Créer un rôle **`leaf`** sur `pki_int` (domaine `lab.local`) capable d'émettre.
+3. Créer un rôle **`endentity`** sur `pki_int` (domaine `lab.local`) capable d'émettre.
 
 ## ✅ Critère de réussite
 Le `verify.sh` vérifie que :
 - le certificat de CA de `pki_int` est **signé par** `/root/ext_root.crt` ;
-- un certificat émis par `pki_int/issue/leaf` **se vérifie** jusqu'à la racine externe.
+- un certificat émis par `pki_int/issue/endentity` **se vérifie** jusqu'à la racine externe.
 
 Clique sur **Check** quand la chaîne est complète.
 
@@ -67,8 +67,8 @@ cat /root/int_signed.crt /root/ext_root.crt > /root/int_chain.crt
 bao write pki_int/intermediate/set-signed certificate=@/root/int_chain.crt
 
 # 5) Rôle + émission de test
-bao write pki_int/roles/leaf allowed_domains=lab.local allow_subdomains=true max_ttl=1h
-bao write -format=json pki_int/issue/leaf common_name=svc.lab.local ttl=10m | jq -r .data.certificate
+bao write pki_int/roles/endentity allowed_domains=lab.local allow_subdomains=true max_ttl=1h
+bao write -format=json pki_int/issue/endentity common_name=svc.lab.local ttl=10m | jq -r .data.certificate
 ```
 
 **Pourquoi OpenBao n'est presque jamais la racine**
