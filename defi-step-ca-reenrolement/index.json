@@ -1,0 +1,20 @@
+{
+  "title": "[DEFI] ★★★ [Step-ca] Réenrôler tout un parc avant l'expiration de l'AC",
+  "description": "Une AC racine RSA arrive en fin de vie : réenrôle en script une cinquantaine de certificats de service sous une nouvelle racine ECDSA. Préserver CN et SAN, régénérer les clés, exclure les services hors-service, produire un rapport de migration. Aucune commande fournie pour le cœur du défi ; indice, coup de pouce et solution de référence repliables.",
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "foreground": "setup.sh"
+    },
+    "steps": [
+      { "title": "Défi 1 — Réenrôler le parc sur la nouvelle AC", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Défi 2 — Ne réenrôle pas les services hors-service", "text": "step2/text.md", "verify": "step2/verify.sh" }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu"
+  }
+}
