@@ -11,15 +11,17 @@ d'une AC à une autre**, sans rien perdre en route.
 2. tu as **réconcilié** la migration avec l'état réel du parc — les services hors-service
    **exclus**, et un **rapport** pour prouver qui a été migré et qui ne l'a pas été.
 
-C'est exactement la compétence attendue le jour d'une **rotation d'AC** : ce n'est pas une
-commande, c'est une **boucle qui itère sur la flotte**, lit l'identité de l'existant, et
-la ré-émet sous la nouvelle autorité.
+C'est exactement la compétence attendue le jour d'une **rotation d'AC** : pas une commande
+magique, mais un **script qui passe tout le parc en revue**, lit l'identité de chaque
+certificat existant et la ré-émet sous la nouvelle autorité.
 
-**Le vrai sujet derrière, c'est la crypto-agilité.** Aujourd'hui RSA → ECDSA ; demain, ce
-sera ECDSA → **algorithmes post-quantiques**. La mécanique que tu viens d'écrire est
-identique : seul l'algorithme de la nouvelle racine change. Une PKI dont on sait réenrôler
-le parc en un script est une PKI **agile** — celle qui survivra au prochain changement
-d'algorithme imposé.
+**Le vrai sujet derrière, c'est la crypto-agilité — et la bascule qui se profile : la
+cryptographie post-quantique.** Le jour où il faudra migrer tout un parc vers des
+algorithmes résistants au quantique, ce n'est pas l'outil qui fera la différence, c'est
+d'avoir déjà le réflexe et le script. La mécanique sera identique à celle que tu viens
+d'écrire ; seul l'algorithme de la nouvelle racine change. Une PKI qu'on sait réenrôler en
+un script est une PKI **agile** : celle qui absorbera la transition post-quantique sans
+réécrire ses fondations dans l'urgence.
 
 **Pour aller plus loin :**
 - gérer le **rollback** : garder l'ancien certificat tant que le nouveau n'est pas déployé

@@ -9,7 +9,7 @@ la nouvelle politique impose de l'**ECDSA**. Verdict : il faut **réenrôler tou
 avant que l'ancienne n'expire et ne fasse tomber la moitié des services un lundi matin.
 
 Personne ne fait ça à la main pour 50 certificats (et encore moins pour 5 000). Ton
-boulot : **écrire le script** qui migre la flotte proprement.
+boulot : **écrire le script** qui migre le parc proprement.
 
 Le setup t'a déjà préparé le terrain :
 - `/root/old_root.crt` : l'**ancienne racine RSA** (celle qui expire) ;
