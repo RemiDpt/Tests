@@ -41,6 +41,23 @@ ext_root.key` en ajoutant `basicConstraints=critical,CA:TRUE`.
 </details>
 
 <details>
+<summary>🧩 Coup de pouce — les 3 pièges qui bloquent à cette étape</summary>
+
+Si ta chaîne ne passe toujours pas, c'est presque toujours l'un de ces trois points :
+
+1. **L'intermédiaire doit pouvoir signer.** `basicConstraints=critical,CA:TRUE` ne
+   suffit pas : sans `keyUsage=critical,keyCertSign,cRLSign` dans les extensions de
+   signature, OpenBao a bien un certificat de CA… qui n'a pas le droit d'émettre. Tes
+   feuilles seront refusées ou ne chaîneront pas.
+2. **`set-signed` veut la chaîne, pas juste l'intermédiaire.** Concatène
+   `int_signed.crt` **puis** `ext_root.crt` dans un seul fichier avant le `set-signed` ;
+   sinon il manque le maillon racine et la vérification s'arrête en chemin.
+3. **Le rôle doit autoriser le sous-domaine.** Le test émet `svc.lab.local`, un
+   sous-domaine de `lab.local` : ton rôle a besoin de `allowed_domains=lab.local` **et**
+   `allow_subdomains=true`, sinon l'émission est refusée alors que tout le reste est bon.
+</details>
+
+<details>
 <summary>🗝️ Solution de référence</summary>
 
 ```
