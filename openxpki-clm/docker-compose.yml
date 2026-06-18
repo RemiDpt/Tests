@@ -1,0 +1,128 @@
+# OpenXPKI — stack de démonstration pour le lab CLM de labPKI.
+#
+# Vendorisé depuis le projet officiel openxpki/openxpki-docker, images ÉPINGLÉES
+# (whiterabbitsecurity/openxpki3:3.32.16) pour un lab reproductible.
+# DÉMONSTRATION / TEST UNIQUEMENT — jamais en production (mots de passe triviaux,
+# secrets de base, TLS auto-signé).
+#
+# Prérequis créés par le guide (README.md) AVANT `docker compose up` :
+#   - ./openxpki-config   (clone de openxpki-config, branche community)
+#   - ./config/client.key (clé du client CLI)
+# Démarrage : docker compose up -d web   →   UI sur https://localhost:8443/webui/index/
+
+x-base-image: &base-image
+  image: whiterabbitsecurity/openxpki3:3.32.16
+
+services:
+  db:
+    container_name: OpenXPKI_Database
+    image: mariadb:11.4
+    command: --default-authentication-plugin=mysql_native_password
+    user: mysql:mysql
+    volumes:
+      - openxpkidb:/var/lib/mysql
+      - openxpkidbsocket:/var/run/mysqld/
+      - ./openxpki-config/contrib/sql/schema-mariadb.sql:/docker-entrypoint-initdb.d/schema-mariadb.sql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    environment:
+      MYSQL_DATABASE: openxpki
+      MYSQL_USER: openxpki
+      MYSQL_PASSWORD: openxpki
+      MYSQL_ROOT_PASSWORD: topsecret
+
+  server:
+    << : *base-image
+    container_name: OpenXPKI_Server
+    command: /usr/bin/openxpkictl start server --nd
+    user: openxpki:openxpki
+    group_add:
+     - openxpkiclient
+    tmpfs:
+      - /tmp
+    volumes:
+      - ./openxpki-config:/etc/openxpki
+      - ./config/client.key:/home/pkiadm/.oxi/client.key
+      - openxpkilog:/var/log/openxpki
+      - openxpkisocket:/run/openxpkid
+      - openxpkidbsocket:/var/run/mysqld/
+      - openxpkidownload:/var/www/download
+      # ne fonctionne pas sur tous les OS (présence de /etc/timezone) ; commente si besoin
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    healthcheck:
+      test: /usr/bin/openxpkictl status server
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    depends_on:
+      db:
+        condition: service_healthy
+
+  client:
+    << : *base-image
+    container_name: OpenXPKI_Client
+    command: /usr/bin/openxpkictl start client --nd
+    user: openxpkiclient:openxpkiclient
+    group_add:
+     - www-data
+    tmpfs:
+      - /tmp
+    volumes:
+      - ./openxpki-config/client.d:/etc/openxpki/client.d
+      - openxpkilogui:/var/log/openxpki-client
+      - openxpkisocket:/run/openxpkid
+      - openxpkiclientsocket:/run/openxpki-clientd
+      - openxpkidbsocket:/var/run/mysqld/
+    healthcheck:
+      test: /usr/bin/openxpkictl status client
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    depends_on:
+      server:
+        condition: service_healthy
+
+  web: &web-apache
+    << : *base-image
+    container_name: OpenXPKI_WebUI
+    command: /usr/bin/start-webserver apache
+    ports:
+      - "8080:80/tcp"
+      - "8443:443/tcp"
+    volumes:
+      - ./openxpki-config/contrib/apache2-openxpki-site.conf:/etc/apache2/sites-enabled/openxpki.conf
+      - ./openxpki-config/tls/:/etc/openxpki/tls/
+      - openxpkiclientsocket:/run/openxpki-clientd
+      - openxpkidownload:/var/www/download:ro
+    healthcheck:
+      test: wget -q http://localhost/healthcheck/ping
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    depends_on:
+      client:
+        condition: service_healthy
+
+  # Variante nginx (non utilisée par le lab ; `docker compose up -d web` lance Apache).
+  web-nginx:
+    << : *web-apache
+    container_name: OpenXPKI_WebUI_nginx
+    command: /usr/bin/start-webserver nginx
+    volumes:
+      - ./openxpki-config/contrib/nginx-openxpki-site:/etc/nginx/sites-enabled/openxpki
+      - ./openxpki-config/tls/:/etc/openxpki/tls/
+      - openxpkiclientsocket:/run/openxpki-clientd
+      - openxpkidownload:/var/www/download:ro
+
+volumes:
+  openxpkidb:
+  openxpkisocket:
+  openxpkiclientsocket:
+  openxpkidbsocket:
+  openxpkilog:
+  openxpkilogui:
+  openxpkidownload:
