@@ -1,3 +1,8 @@
 # Peuplés par le guide au moment de lancer le lab — ne pas committer.
 openxpki-config/
 config/
+
+# Artefacts Vagrant / VM
+.vagrant/
+*.box
+*.ova

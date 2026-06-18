@@ -5,6 +5,9 @@
 > ⚠️ Ce lab ne tourne **pas** sur Killercoda : il a une interface web, et on la veut
 > sans bidouille de proxy. Tu le lances **en local sur ta machine**, avec Docker, et tu
 > ouvres la console dans ton navigateur. Compte une dizaine de minutes de mise en route.
+>
+> Deux façons de le lancer : **à la main avec Docker** (étapes ci-dessous) ou
+> **tout-en-un avec Vagrant** (section [Variante : VM clé en main](#variante--vm-clé-en-main-vagrant)).
 
 ## Pourquoi ce lab
 
@@ -55,16 +58,20 @@ openssl ecparam -name prime256v1 -genkey -noout -out config/client.key
 chmod 644 config/client.key
 
 # Clé de chiffrement du coffre interne (svault)
-openssl rand -hex 32
+KEY=$(openssl rand -hex 32)
+sed -i "s|.*##SVAULTKEY##.*|        value: $KEY|" \
+  openxpki-config/config.d/system/crypto.yaml
+echo "svault = $KEY"
 ```
 
-Copie la valeur affichée par `openssl rand -hex 32` dans
-`openxpki-config/config.d/system/crypto.yaml`, à l'emplacement du **`svault`** (le champ
-`value:` / `key:` qui attend une valeur hexadécimale).
+La configuration `community` laisse un emplacement `##SVAULTKEY##` dans
+`openxpki-config/config.d/system/crypto.yaml` (groupe `svault`) : la commande ci-dessus le
+remplace par une vraie clé hexadécimale de 64 caractères.
 
-> **Garde une copie de cette clé.** C'est elle qui chiffre les données sensibles
-> d'OpenXPKI : si tu la perds, tu perds l'accès à ce qui a été chiffré. En lab c'est sans
-> conséquence ; le réflexe, lui, est à prendre dès maintenant.
+> **Garde une copie de cette clé** (celle affichée par `echo svault = …`). C'est elle qui
+> chiffre les données sensibles d'OpenXPKI : si tu la perds, tu perds l'accès à ce qui a
+> été chiffré. En lab c'est sans conséquence ; le réflexe, lui, est à prendre dès
+> maintenant.
 
 ## 2. Démarrer la stack
 
@@ -171,6 +178,34 @@ qu'on oublie jusqu'au jour de l'incident.
   `defi-step-ca-reenrolement`, mais piloté depuis une interface plutôt qu'en script.
 
 ---
+
+## Variante : VM clé en main (Vagrant)
+
+Si tu veux **éviter toute installation manuelle** — ou préparer un `.ova` à distribuer en
+atelier — un `Vagrantfile` est fourni dans ce dossier. Il construit une VM Ubuntu,
+installe Docker, déroule **les étapes 1 à 3 tout seul**, et tu n'as plus qu'à ouvrir la
+console.
+
+Prérequis sur ton poste : **Vagrant + VirtualBox**. Puis, depuis `openxpki-clm/` :
+
+```bash
+vagrant up          # construit la VM et déploie OpenXPKI (quelques minutes)
+# ... puis ouvre https://localhost:8443/webui/index/
+```
+
+Le `Vagrantfile` est la **recette** (texte, versionnée), pas l'image binaire. Pour
+produire un `.ova` distribuable à partir de la VM (poste sans Vagrant, juste VirtualBox) :
+
+```bash
+vagrant halt
+VBoxManage export openxpki-clm -o openxpki-clm.ova
+```
+
+> L'`.ova` fige la clé `svault` et les comptes de démo : **démonstration uniquement**, et
+> ne le versionne pas dans git (il pèse plusieurs Go — `*.ova` est déjà dans le
+> `.gitignore`). Héberge-le hors du dépôt (release / lien externe).
+
+Pour tout arrêter : `vagrant halt` (éteindre) ou `vagrant destroy` (supprimer la VM).
 
 ## Dépannage
 
