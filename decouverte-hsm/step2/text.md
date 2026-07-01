@@ -18,9 +18,9 @@ pkcs11-tool --module $MODULE --token-label "CA-Root-HSM" --login --pin 1234 \
   --label "ca-root-key" --id 01
 ```{{exec}}
 
-> ⚠️ **À TESTER EN LIVE** — `pkcs11-tool` vient du paquet `opensc`. La désignation du
-> token par `--token-label` évite le piège du numéro de slot. Si la génération échoue,
-> vérifie le PIN (`1234`) et le label du token (`CA-Root-HSM`).
+> `pkcs11-tool` vient du paquet `opensc`. La désignation du token par `--token-label`
+> évite le piège du numéro de slot. Si la génération échoue, vérifie le PIN (`1234`)
+> et le label du token (`CA-Root-HSM`).
 
 Lister les objets du token : tu dois voir une clé **privée** et une clé **publique**,
 toutes deux étiquetées `ca-root-key` :

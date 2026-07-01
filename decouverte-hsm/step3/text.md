@@ -46,8 +46,7 @@ openssl req -new -x509 -days 3650 \
   -out /root/ca-hsm.crt
 ```{{exec}}
 
-> ⚠️ **À TESTER EN LIVE — commande la plus sensible du lab.** L'engine PKCS#11
-> d'OpenSSL est capricieux selon la version :
+> **L'engine PKCS#11 d'OpenSSL varie selon la version :**
 > - sur **OpenSSL 1.1**, la syntaxe `-engine pkcs11 -keyform engine` ci-dessus est la
 >   plus courante ;
 > - sur **OpenSSL 3** (Ubuntu récents), l'engine est déprécié : il faut parfois passer

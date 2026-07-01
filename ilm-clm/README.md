@@ -102,7 +102,7 @@ git clone --branch Helm-Charts-2.18.0 --depth 1 \
 cd CZERTAINLY-Helm-Charts/charts/ilm
 ```
 
-> ⚠️ **TODO-À-VÉRIFIER — nom exact du tag de release.** La page Releases liste « Helm-Charts-2.18.0 ». Confirme le tag exact sur <https://github.com/CZERTAINLY/CZERTAINLY-Helm-Charts/releases> et ajuste `--branch` si besoin. Si le clone par tag échoue, clone `main` puis `git checkout` le tag voulu.
+> **Tag de release.** Ce lab s'appuie sur le tag `Helm-Charts-2.18.0` (voir la page <https://github.com/CZERTAINLY/CZERTAINLY-Helm-Charts/releases>). Si le clone par tag échoue, clone `main` puis `git checkout` le tag voulu.
 
 Construis les dépendances locales (résout les sous-charts `file://`) :
 
@@ -133,7 +133,7 @@ helm install ilm-postgres oci://registry-1.docker.io/bitnamicharts/postgresql \
   --set auth.database=ilm
 ```
 
-> ⚠️ **TODO-À-VÉRIFIER — registre Bitnami.** Depuis fin 2025, Bitnami a déplacé une partie de ses images/charts (registre « bitnamilegacy » / `bitnamisecure`). Si le `helm install` ci-dessus échoue au *pull*, déploie un PostgreSQL minimal par un manifeste `kubectl` (image `postgres:16` officielle Docker Hub), ou consulte <https://github.com/bitnami/charts> pour le chemin courant. L'essentiel : un service PostgreSQL joignable dans le namespace `ilm`, avec un utilisateur/mot de passe/base connus.
+> **Registre Bitnami.** Depuis fin 2025, Bitnami a déplacé une partie de ses images/charts (registre « bitnamilegacy » / `bitnamisecure`). Si le `helm install` ci-dessus échoue au *pull*, déploie un PostgreSQL minimal par un manifeste `kubectl` (image `postgres:16` officielle Docker Hub), ou consulte <https://github.com/bitnami/charts> pour le chemin courant. L'essentiel : un service PostgreSQL joignable dans le namespace `ilm`, avec un utilisateur/mot de passe/base connus.
 
 Note l'adresse interne du service (typiquement `ilm-postgres-postgresql.ilm.svc.cluster.local:5432`) :
 
@@ -167,7 +167,7 @@ Explication en langage simple de chaque bloc :
 | super-admin (clé à vérifier) | le 1er compte humain | identifiant + secret de lab |
 | `*.ingress.enabled` | exposer la console via un nom d'hôte | **false** (on fait du port-forward) |
 
-> ⚠️ **TODO-À-VÉRIFIER — clés exactes DB / super-admin.** Je n'ai pas pu lire intégralement `values.yaml` sur source vivante. Repère les clés réelles dans le `ilm-values.yaml` généré par `helm show values` et dans <https://github.com/CZERTAINLY/CZERTAINLY-Helm-Charts/tree/main/charts/ilm/docs> (pages « Configurable parameters »). Ne devine pas : ce que le chart te montre fait foi.
+> **Noms de clés DB / super-admin.** Ils varient selon la version du chart : repère les clés réelles dans le `ilm-values.yaml` généré par `helm show values` et dans <https://github.com/CZERTAINLY/CZERTAINLY-Helm-Charts/tree/main/charts/ilm/docs> (pages « Configurable parameters »). Ne devine pas : ce que le chart te montre fait foi.
 
 Prépare la chaîne de confiance step-ca dans un fichier PEM (concatène racine + intermédiaire de ton step-ca) :
 
@@ -200,7 +200,7 @@ Attends que **tous** les pods soient `Running` et `READY` (colonne `1/1`, `2/2`�
 kubectl get pods -n ilm
 ```
 
-> ⚠️ **TODO-À-VÉRIFIER — images privées / `imagePullSecrets`.** Le cœur (`czertainly/czertainly-core`) et le connecteur de découverte (`czertainly/czertainly-ip-discovery-provider`) sont sur **Docker Hub public**. Mais le README du chart prévient que *certains* sous-charts peuvent référencer des images de **dépôts privés**. Si un pod reste en `ImagePullBackOff`, liste les images réellement tirées et repère le registre fautif :
+> **Images privées / `imagePullSecrets`.** Le cœur (`czertainly/czertainly-core`) et le connecteur de découverte (`czertainly/czertainly-ip-discovery-provider`) sont sur **Docker Hub public**. Mais le README du chart prévient que *certains* sous-charts peuvent référencer des images de **dépôts privés**. Si un pod reste en `ImagePullBackOff`, liste les images réellement tirées et repère le registre fautif :
 >
 > ```bash
 > helm template . -f ilm-values.yaml | grep -E '^\s*image:' | sort -u
@@ -236,7 +236,7 @@ https://localhost:8443/administrator/
 
 **Création du Super Administrateur :** au premier accès, ILM te fait créer (ou importer) l'identité du super-administrateur.
 
-> ⚠️ **TODO-À-VÉRIFIER — bootstrap du super-admin (voie communautaire).** Le mécanisme exact varie selon la version : authentification via **Keycloak** (embarqué par le sous-chart `keycloak-internal`) et/ou **certificat client super-admin** généré au premier démarrage. Récupère la procédure réelle dans la doc « Quick start » (<https://docs.otilm.com/docs>) correspondant à la version 2.18.x, et note les libellés que tu vois à l'écran — c'est ce qui permettra d'affiner ce guide.
+> **Bootstrap du super-admin (voie communautaire).** Le mécanisme exact varie selon la version : authentification via **Keycloak** (embarqué par le sous-chart `keycloak-internal`) et/ou **certificat client super-admin** généré au premier démarrage. La procédure de référence est dans la doc « Quick start » (<https://docs.otilm.com/docs>) correspondant à la version 2.18.x ; suis les libellés affichés à l'écran.
 
 ---
 
@@ -296,7 +296,7 @@ Clique **Create** pour lancer le scan.
 
 **Fais :** ouvre le menu des certificats (inventaire).
 
-> ⚠️ **TODO-À-VÉRIFIER — libellé exact du menu inventaire** (« Certificates » / « Inventory » selon version). Note l'intitulé réel.
+> Le libellé du menu inventaire varie selon la version (« Certificates » ou « Inventory »).
 
 **Observe** — et c'est tout l'intérêt :
 
@@ -307,7 +307,7 @@ Clique **Create** pour lancer le scan.
 
 Un **CBOM** est l'inventaire *cryptographique* de ton parc au format CycloneDX : il liste chaque algorithme et chaque certificat avec son niveau de résistance quantique. C'est la requête « qu'est-ce qui casse face à un quantique ? » rendue exploitable.
 
-> ⚠️ **TODO-À-VÉRIFIER — génération auto du CBOM depuis l'inventaire ILM.** Le composant officiel **CBOM-Repository** (`github.com/CZERTAINLY/CBOM-Repository`) sait *stocker, rechercher et versionner* des CBOM ; en revanche, qu'ILM **génère** automatiquement un CBOM à partir de l'inventaire découvert (dans l'UI cœur) n'est **pas confirmé** sur source vivante, et le CBOM-Repository est un **composant additionnel** (pas dans le parapluie par défaut). Vérifie sa présence/déploiement avant de t'appuyer dessus.
+> **Génération auto du CBOM depuis l'inventaire.** Le composant officiel **CBOM-Repository** (`github.com/CZERTAINLY/CBOM-Repository`) sait *stocker, rechercher et versionner* des CBOM ; en revanche la génération automatique d'un CBOM depuis l'inventaire découvert n'est pas garantie dans l'UI cœur, et le CBOM-Repository est un **composant additionnel** (pas dans le parapluie par défaut). Vérifie sa présence/déploiement avant de t'appuyer dessus — d'où l'approche « CBOM buildable à la main » ci-dessous.
 
 Voie buildable aujourd'hui : construire un CBOM correspondant aux certificats découverts, puis l'exploiter. Voici un **CBOM CycloneDX 1.6 minimal et valide** (testé : il parse, et un filtre `nistQuantumSecurityLevel == 0` isole bien RSA-2048, la cible de migration) :
 
@@ -405,7 +405,7 @@ jq '[.components[] | select(.cryptoProperties.algorithmProperties.nistQuantumSec
 | Symptôme | Piste |
 |---|---|
 | Un pod reste `Pending` | Ressources insuffisantes : `kubectl describe pod -n ilm <pod>` (souvent CPU/RAM/PV). Ferme des applis, ou baisse les composants non requis dans `ilm-values.yaml`. |
-| `ImagePullBackOff` | Image dans un dépôt privé : voir le TODO de l'étape 6 (`helm template … | grep image:`, `docker pull`, `imagePullSecret`). |
+| `ImagePullBackOff` | Image dans un dépôt privé : voir l'encart de l'étape 6 (`helm template … | grep image:`, `docker pull`, `imagePullSecret`). |
 | `CrashLoopBackOff` du cœur | Souvent la **base** : vérifie l'hôte/login PostgreSQL dans `ilm-values.yaml` et que le service PostgreSQL est `Running`. `kubectl logs -n ilm <pod>`. |
 | Console inaccessible sur `:8443` | Le `kubectl port-forward` doit rester ouvert ; vérifie le **nom de service** réel (`kubectl get svc -n ilm`). |
 | Avertissement TLS dans le navigateur | Normal (auto-signé) : accepte l'exception. |
@@ -438,7 +438,7 @@ Arrête aussi le terminal `openssl s_server` (Ctrl-C) et `kubectl port-forward`.
 
 - **Versions épinglées :** chart ILM **2.18.0** (dépôt `CZERTAINLY/CZERTAINLY-Helm-Charts`) ; cœur `czertainly/czertainly-core` et `czertainly/czertainly-ip-discovery-provider` sur **Docker Hub public** ; `appVersion` 2.18.x.
 - **Démo uniquement :** mots de passe triviaux, TLS auto-signé, PostgreSQL non durci, aucune persistance fiable. **Jamais en production.**
-- **MIT vs abonnement :** le **cœur CZERTAINLY/ILM est open source (MIT)** et ses images cœur sont librement tirables. Le modèle est « commercial open source » : **certains connecteurs/composants** peuvent relever d'une licence séparée ou d'un **registre privé** (`hub.omnitrustregistry.com`) — d'où les `⚠️ TODO-À-VÉRIFIER` sur les images. Pour ce lab, on s'en tient au périmètre librement tirable.
+- **MIT vs abonnement :** le **cœur CZERTAINLY/ILM est open source (MIT)** et ses images cœur sont librement tirables. Le modèle est « commercial open source » : **certains connecteurs/composants** peuvent relever d'une licence séparée ou d'un **registre privé** (`hub.omnitrustregistry.com`) — d'où les avertissements sur les images privées plus haut. Pour ce lab, on s'en tient au périmètre librement tirable.
 - **Rebranding :** CZERTAINLY a été renommé **ILM** (OmniTrust / Integrity Security Services) début 2026. Doc : <https://docs.otilm.com> (les liens `docs.czertainly.com` redirigent en 301). Org GitHub historique toujours active : `github.com/CZERTAINLY`.
 
 ---

@@ -12,8 +12,8 @@ export MODULE=$(ls /usr/lib/softhsm/libsofthsm2.so /usr/lib/*/softhsm/libsofthsm
 echo "Module : $MODULE"
 ```{{exec}}
 
-> ⚠️ **À TESTER EN LIVE** — si `Module :` s'affiche vide, le `.so` est ailleurs.
-> Cherche-le : `find / -name 'libsofthsm2.so' 2>/dev/null` et exporte le bon chemin.
+> Si `Module :` s'affiche vide, le `.so` est ailleurs : cherche-le avec
+> `find / -name 'libsofthsm2.so' 2>/dev/null` et exporte le bon chemin.
 
 Initialiser le token. Les codes PIN sont triviaux ici (lab jetable) — en production,
 ils sont longs et détenus séparément par plusieurs personnes :

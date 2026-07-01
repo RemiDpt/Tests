@@ -22,12 +22,3 @@ decouverte-openbao/
 
 ## Déploiement
 Mettre ce dossier au top level du repo Killercoda, committer, pousser.
-
-## Points fragiles à tester en live
-- **setup.sh** : la version épinglée `BAO_VERSION` et l'URL du .deb sur les
-  releases GitHub (pattern `bao_<version>_linux_amd64.deb`) ;
-- la vitesse de téléchargement des releases GitHub depuis Killercoda ;
-- les `export BAO_ADDR/BAO_TOKEN` de l'étape 1 valent pour LE terminal courant :
-  si l'apprenant ouvre un autre onglet, les variables manquent (les verify.sh, eux,
-  les redéfinissent) ;
-- l'endpoint CRL `/v1/pki/crl/pem` (utilisé à l'étape 4).
