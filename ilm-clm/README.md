@@ -162,9 +162,9 @@ Explication en langage simple de chaque bloc :
 
 | Bloc de valeurs | À quoi ça sert | Réglage lab |
 |---|---|---|
-| `global.database.*` (nom exact à vérifier) | où ILM stocke son inventaire | service PostgreSQL de l'étape 4 |
+| `global.database.*` | où ILM stocke son inventaire | service PostgreSQL de l'étape 4 |
 | `global.trusted.certificates` | quelles AC ILM considère comme de confiance | chaîne step-ca (en `--set-file`) |
-| super-admin (clé à vérifier) | le 1er compte humain | identifiant + secret de lab |
+| super-admin | le 1er compte humain | identifiant + secret de lab |
 | `*.ingress.enabled` | exposer la console via un nom d'hôte | **false** (on fait du port-forward) |
 
 > **Noms de clés DB / super-admin.** Ils varient selon la version du chart : repère les clés réelles dans le `ilm-values.yaml` généré par `helm show values` et dans <https://github.com/CZERTAINLY/CZERTAINLY-Helm-Charts/tree/main/charts/ilm/docs> (pages « Configurable parameters »). Ne devine pas : ce que le chart te montre fait foi.

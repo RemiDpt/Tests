@@ -26,7 +26,3 @@ decouverte-hsm/
 ├── step4/  text.md               # cérémonie de clés, ANSSI, récap du parcours
 └── finish.md
 ```
-
-## Décision de conception
-Lab validé par l'utilisateur (option « Cérémonie SoftHSM2 + OpenSSL ») après étude de
-faisabilité : la voie step-ca + PKCS#11 a été écartée (build CGO/Docker hsm trop fragile).

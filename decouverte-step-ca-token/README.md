@@ -29,7 +29,7 @@ decouverte-step-ca-token/
 Mettre ce dossier au top level du repo Killercoda (à côté de decouverte-step-ca/),
 committer, pousser. Le webhook synchronise.
 
-## Mécanique centrale (validée en live)
+## Mécanique centrale
 ```
 TOKEN=$(step ca token <nom> --provisioner admin --password-file /root/.step-password \
   --ca-url https://localhost:4443 --root $(step path)/certs/root_ca.crt)
@@ -37,10 +37,3 @@ step ca certificate <nom> cert.pem key.pem --token $TOKEN \
   --ca-url https://localhost:4443 --root $(step path)/certs/root_ca.crt
 ```
 Token et émission doivent être lancés dans le MÊME terminal (variable `$TOKEN`).
-
-## Points à confirmer en live
-- step4 : le `--force` ajouté à `step ca certificate` pour écraser cert.pem/key.pem
-  lors du rejeu (à vérifier : nom exact du flag d'écrasement sur cette version) ;
-- step4 : la mention `step ca renew` (mTLS) n'est pas exécutée dans le lab, juste
-  citée — à valider si un jour on en fait une étape ;
-- `pgrep -x step-ca` disponible (utilisé par step2/verify.sh, normalement oui).
