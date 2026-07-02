@@ -25,7 +25,7 @@ if ! openssl verify -CAfile "$EXT" /tmp/int.crt >/dev/null 2>&1; then
   exit 1
 fi
 
-# 3) Une feuille émise par pki_int doit chaîner jusqu'à la racine externe.
+# 3) Un certificat émis par pki_int doit chaîner jusqu'à la racine externe.
 if ! bao write -format=json pki_int/issue/endentity common_name=svc.lab.local ttl=10m > /tmp/endentity.json 2>/dev/null; then
   echo "Émission impossible via pki_int/issue/endentity : crée le rôle 'endentity' sur pki_int."
   exit 1

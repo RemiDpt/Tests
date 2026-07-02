@@ -48,7 +48,7 @@ Si ta chaîne ne passe toujours pas, c'est presque toujours l'un de ces trois po
 1. **L'intermédiaire doit pouvoir signer.** `basicConstraints=critical,CA:TRUE` ne
    suffit pas : sans `keyUsage=critical,keyCertSign,cRLSign` dans les extensions de
    signature, OpenBao a bien un certificat de CA… qui n'a pas le droit d'émettre. Tes
-   feuilles seront refusées ou ne chaîneront pas.
+   certificats d'entité finale seront refusés ou ne chaîneront pas.
 2. **`set-signed` veut la chaîne, pas juste l'intermédiaire.** Concatène
    `int_signed.crt` **puis** `ext_root.crt` dans un seul fichier avant le `set-signed` ;
    sinon il manque le maillon racine et la vérification s'arrête en chemin.
@@ -92,8 +92,8 @@ bao write -format=json pki_int/issue/endentity common_name=svc.lab.local ttl=10m
 
 En vrai, on ne laisse pas un serveur applicatif être sa propre racine de confiance. La
 racine reste hors-ligne — ici, OpenSSL en joue le rôle — et ne signe qu'une poignée
-d'intermédiaires. OpenBao, lui, n'héberge qu'une intermédiaire, qui émet les feuilles au
-quotidien. L'intérêt est très concret : le jour où OpenBao est compromis, tu révoques
+d'intermédiaires. OpenBao, lui, n'héberge qu'une intermédiaire, qui émet les
+certificats d'entité finale au quotidien. L'intérêt est très concret : le jour où OpenBao est compromis, tu révoques
 *son* intermédiaire et tu en réémets une depuis la racine, sans reconstruire toute la
 PKI ni redéployer une nouvelle racine sur chaque poste de l'entreprise. C'est le
 découpage qu'on retrouve dans toutes les grosses infras.

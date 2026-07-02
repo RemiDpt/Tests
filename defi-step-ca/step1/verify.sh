@@ -16,7 +16,7 @@ fi
 # La chaîne complète doit se vérifier : entité finale -> intermediate -> root.
 if ! openssl verify -CAfile "$DIR/root.crt" -untrusted "$DIR/intermediate.crt" "$DIR/endentity.crt" >/dev/null 2>&1; then
   echo "La chaîne ne se vérifie pas (openssl verify échoue) dans $DIR."
-  echo "Vérifie que l'intermédiaire est signé par la racine, et la feuille par l'intermédiaire."
+  echo "Vérifie que l'intermédiaire est signé par la racine, et l'entité finale par l'intermédiaire."
   exit 1
 fi
 

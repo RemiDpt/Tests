@@ -2,8 +2,8 @@
 
 Une politique dit ce qui est **autorisé**. Un **template** dit ce que le certificat
 **contiendra**, quoi que demande le client. C'est ainsi qu'on impose une OU, des
-usages de clé, ou qu'on interdit qu'une feuille soit une CA — sans faire confiance au
-demandeur.
+usages de clé, ou qu'on interdit qu'un certificat d'entité finale soit une CA — sans
+faire confiance au demandeur.
 
 Assure-toi que la CA tourne *(bloc fourni)* :
 
@@ -84,7 +84,7 @@ openssl x509 -in /tmp/t.crt -noout -subject
 Une politique autorise ou refuse ; un template, lui, fabrique le contenu. Tu décides ce
 que portera *chaque* certificat émis — ici l'OU `PKI-Defi` — quoi que demande le client.
 C'est l'outil pour imposer des usages de clé, une unité organisationnelle, ou interdire
-qu'une feuille se retrouve marquée comme CA. Dans une banque ou un grand groupe, c'est
+qu'un certificat d'entité finale se retrouve marqué comme CA. Dans une banque ou un grand groupe, c'est
 ce qui garantit que tous les certificats serveurs portent la même OU et les mêmes
 extensions, peu importe quel développeur les demande : la conformité ne repose pas sur
 la bonne volonté de chacun, elle est cousue dans la CA.

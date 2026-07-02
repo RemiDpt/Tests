@@ -22,5 +22,5 @@ mais **comment protéger ce qui rend l'émission digne de confiance**.
 
 **Pour aller plus loin :**
 - rejouer la cérémonie avec une clé **ECDSA** plutôt que RSA ;
-- signer une **intermédiaire** par la racine du HSM, puis des certificats feuilles par l'intermédiaire ;
+- signer une **intermédiaire** par la racine du HSM, puis des certificats d'entité finale par l'intermédiaire ;
 - brancher la clé du HSM sur une vraie CA (step-ca compilé avec PKCS#11, ou une CA d'entreprise adossée à un HSM).

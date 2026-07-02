@@ -4,9 +4,9 @@
 
 Tu as résolu, sans commandes toutes faites :
 
-1. une **hiérarchie à trois niveaux** vérifiable de la feuille à la racine ;
+1. une **hiérarchie à trois niveaux** vérifiable de l'entité finale à la racine ;
 2. l'émission d'un **certificat SSH** utilisateur signé par la CA ;
-3. une **politique** de provisioner qui **refuse réellement** un nom hors périmètre ;
+3. une **politique d'autorité** qui **refuse réellement** un nom hors périmètre ;
 4. un **template** qui **impose** le contenu d'un certificat, demandeur ou pas.
 
 Ce sont exactement les leviers d'une PKI maîtrisée : *qui* peut demander, *quoi*

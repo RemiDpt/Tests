@@ -54,8 +54,8 @@ openssl req -new -x509 -days 3650 \
 > - si l'engine ne trouve pas le module, exporte `PKCS11_MODULE_PATH=$MODULE` avant la
 >   commande, ou vérifie que SoftHSM2 est enregistré auprès de p11-kit
 >   (`p11-kit list-modules`).
-> Si cette étape résiste, le cœur pédagogique (Preuves 1 et la clé née dans le HSM) est
-> déjà acquis aux étapes 1-2.
+> Si cette étape résiste, le cœur pédagogique (la preuve de non-extraction et la clé née
+> dans le HSM) est déjà acquis aux étapes 1-2.
 
 Inspecter le certificat racine obtenu :
 

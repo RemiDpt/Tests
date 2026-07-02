@@ -15,9 +15,9 @@
 Tu as déjà rencontré deux étages de la PKI dans le parcours :
 
 - **L'autorité de certification** (step-ca, OpenBao) : ça *signe*. C'est la racine de confiance.
-- **Le trust center** (EJBCA, OpenXPKI) : ça *émet à l'échelle* — autorité d'enregistrement (RA), profils, console d'opérateur.
+- **Le trust center** (OpenXPKI) : ça *émet à l'échelle* — autorité d'enregistrement (RA), profils, console d'opérateur.
 
-ILM ajoute l'étage du dessus : la **couche CLM-produit** posée *au-dessus d'un parc multi-AC*. Son métier n'est pas d'émettre (les labs EJBCA/OpenXPKI l'ont déjà montré), mais de **voir et piloter tout ce qui existe déjà**, quelle que soit l'AC :
+ILM ajoute l'étage du dessus : la **couche CLM-produit** posée *au-dessus d'un parc multi-AC*. Son métier n'est pas d'émettre (le lab OpenXPKI l'a déjà montré), mais de **voir et piloter tout ce qui existe déjà**, quelle que soit l'AC :
 
 - **Découverte** : retrouver les certificats là où ils vivent vraiment (un scan réseau, des journaux de transparence…), pas seulement ceux qu'on a soi-même émis.
 - **Inventaire agnostique de l'émetteur** : un seul tableau qui mélange les certificats step-ca, EJBCA, Let's Encrypt, auto-signés… avec leur expiration, leur algorithme, leur émetteur.
@@ -242,7 +242,7 @@ https://localhost:8443/administrator/
 
 ## Le parcours — découverte, inventaire, CBOM
 
-C'est le vrai bénéfice d'ILM, et ce qu'EJBCA/OpenXPKI ne montrent pas. Format **fais X / observe Y**.
+C'est le vrai bénéfice d'ILM, et ce qu'OpenXPKI ne montre pas. Chaque bloc suit le même rythme : **fais**, puis **observe**.
 
 ### A. Donner quelque chose à découvrir (réutiliser step-ca)
 
@@ -387,7 +387,7 @@ jq '[.components[] | select(.cryptoProperties.algorithmProperties.nistQuantumSec
 
 **Observe :** seul `RSA-2048` ressort. À l'échelle d'un vrai parc, cette même requête te donne *tout ce qui doit passer en PQC* — c'est précisément ce que prépare le défi [defi-step-ca-reenrolement](../defi-step-ca-reenrolement).
 
-> **Note d'honnêteté.** ILM (et le CBOM) apportent surtout la **visibilité** et l'**orchestration** de la migration. L'**émission native** de certificats PQC (ML-DSA…) dépend de l'AC/connecteur en aval, pas d'ILM. Ne survends pas : la valeur certaine ici, c'est *voir et trier le parc*, pas *signer en PQC*.
+> **Les limites, pour être clair.** ILM (et le CBOM) apportent la **visibilité** et l'**orchestration** de la migration. L'**émission native** de certificats PQC (ML-DSA…) dépend de l'AC/connecteur en aval, pas d'ILM. La valeur ici, c'est *voir et trier le parc*, pas *signer en PQC*.
 
 ---
 

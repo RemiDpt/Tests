@@ -11,7 +11,7 @@ dossier** ; le vérificateur les cherche dans ton dossier courant, `/root` ou `/
 |---|---|---|
 | `root.crt` / `root.key` | racine auto-signée | doit être une **CA** |
 | `intermediate.crt` / `intermediate.key` | intermédiaire | **CA**, signée par la racine |
-| `endentity.crt` / `endentity.key` | entité finale (feuille) | **pas** une CA, pour `www.lab.local` |
+| `endentity.crt` / `endentity.key` | entité finale | **pas** une CA, pour `www.lab.local` |
 
 ## 🔎 Critère de réussite
 - `openssl verify -CAfile root.crt -untrusted intermediate.crt endentity.crt` réussit ;
@@ -60,23 +60,23 @@ l'**entité finale** ; c'est pour ça que le profil garde ce nom même si on app
 fichier produit `endentity.crt`.) C'est la hiérarchie qu'on retrouve dans
 n'importe quelle boîte : une racine maison, puis une intermédiaire **par usage** — une
 pour les serveurs web, une pour le VPN, une pour la signature de code — et des milliers
-de feuilles en bout de chaîne.
+de certificats d'entité finale en bout de chaîne.
 
 **Qui signe qui**
 
 `--ca` et `--ca-key`, c'est juste « avec quelle autorité je signe ce certificat ». La
-racine signe l'intermédiaire, l'intermédiaire signe la feuille. À la vérification,
+racine signe l'intermédiaire, l'intermédiaire signe l'entité finale. À la vérification,
 `-untrusted` tend à OpenSSL le maillon du milieu pour qu'il rebâtisse le chemin
-feuille → intermédiaire → racine ; le seul certificat en qui on fait confiance d'emblée,
+entité finale → intermédiaire → racine ; le seul certificat en qui on fait confiance d'emblée,
 c'est la racine passée à `-CAfile`. Ton navigateur fait exactement ce raisonnement à
 chaque connexion HTTPS.
 
 **Le piège à éviter**
 
-Ne signe jamais une feuille directement avec la racine. Dans une vraie PKI, la racine
+Ne signe jamais un certificat d'entité finale directement avec la racine. Dans une vraie PKI, la racine
 ne signe que des intermédiaires, et le reste du temps elle dort hors-ligne, parfois
 dans un coffre. Une racine compromise, c'est toute la PKI à reconstruire et à
 redistribuer sur chaque poste du parc — le genre d'incident qui occupe une équipe
 sécurité pendant des semaines. Respecte aussi l'ordre : racine, puis intermédiaire,
-puis feuille — chaque niveau a besoin de celui du dessus pour être signé.
+puis entité finale — chaque niveau a besoin de celui du dessus pour être signé.
 </details>

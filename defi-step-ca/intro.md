@@ -11,7 +11,7 @@ Quatre défis, indépendants ou presque, de difficulté croissante :
 
 1. **Hiérarchie à trois niveaux**, entièrement hors-ligne (échauffement) ;
 2. **Certificat SSH** utilisateur émis par la CA ;
-3. **Politique de provisioner** qui refuse réellement un nom interdit ;
+3. **Politique d'autorité** qui refuse réellement un nom interdit ;
 4. **Template** qui impose un contenu au certificat, sans que le demandeur le choisisse.
 
 **Règles du jeu :**

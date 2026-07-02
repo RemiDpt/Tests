@@ -9,7 +9,7 @@ d'une vraie **cérémonie de clés** de CA racine :
 
 En production, ce déroulé est **scénarisé, filmé, et accompagné de témoins**. Pourquoi
 tant de cérémonie pour quelques commandes ? Parce que la clé d'une CA racine est le
-point de confiance ultime : tout le reste (intermédiaires, certificats feuilles) en
+point de confiance ultime : tout le reste (intermédiaires, certificats d'entité finale) en
 découle. Si elle fuit, c'est toute la PKI qui s'effondre — et une racine vit dix,
 vingt ans. On ne peut pas se permettre le moindre doute sur le fait qu'aucune copie
 n'a jamais existé.

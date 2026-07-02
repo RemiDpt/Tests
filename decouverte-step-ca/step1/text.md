@@ -39,9 +39,8 @@ ls -R $(step path)
 Deux fichiers sont à retenir : `certs/root_ca.crt` (le **certificat racine**, celui en
 qui tout le monde fait confiance) et `certs/intermediate_ca.crt` (le maillon qui signera
 les certificats émis). La racine ne signe que l'intermédiaire — jamais directement un
-certificat **feuille** (son nom officiel, celui que tu croiseras dans les RFC et les
-documents ANSSI, est *certificat d'entité finale*). C'est la règle dans toutes les PKI
-d'entreprise : la racine signe
+**certificat d'entité finale** (celui d'un serveur, d'un service, d'un job CI). C'est la
+règle dans toutes les PKI d'entreprise : la racine signe
 une poignée d'intermédiaires puis retourne au coffre, et ce sont les intermédiaires qui
 émettent au quotidien les milliers de certificats des serveurs et des services.
 
@@ -56,7 +55,7 @@ Voici l'architecture que tu viens de générer, en une image :
       │
       │  signe
       ▼
-   Certificat feuille  (test.lab.local)     ton serveur, ton service, ton job CI
+   Entité finale  (test.lab.local)          ton serveur, ton service, ton job CI
 ```
 
 Cliquer sur **Check** une fois la PKI générée.
